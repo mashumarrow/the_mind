@@ -1,27 +1,41 @@
-import { useEffect, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
+import { Suspense, useEffect, useState } from "react";
+import { GetCountries } from "./utils/functions/fetchCountries";
 
-const supabase = createClient("https://iugkezjkrodtdxfzverc.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml1Z2tlemprcm9kdGR4Znp2ZXJjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTg2MzE1NjgsImV4cCI6MjAzNDIwNzU2OH0.b4cCjvU3urfWaJNZ_5dohRi1B6emQQg8vmoleFOapi4");
+
+type Country = {
+  id: number;
+  name: string;
+};
+
 
 function App() {
-  const [countries, setCountries] = useState<any>([]);
+  const [countries, setCountries] = useState<Country[]>([]);
 
   useEffect(() => {
+    const getCountries = async () => {
+      const response = await GetCountries();
+      if (response.data) {
+        console.log(response.data);
+        setCountries(response.data);
+      } else {
+        console.log("No data found", response.error);
+      }
+    };
     getCountries();
   }, []);
 
-  async function getCountries() {
-    const { data } : any = await supabase.from("countries").select();
-    setCountries(data);
-  }
 
   return (
-    <ul>
-      <h1>ayano</h1>
-      {countries.map((country : any) => (
-        <li key={country.name}>{country.name}</li>
-      ))}
-    </ul>
+    <Suspense fallback={<div>Loading...</div>}>
+      <div>
+        <h1 className="text-red-500">Countries</h1>
+        <ul>
+          {countries.map((country) => (
+            <li key={country.id}>{country.name}</li>
+          ))}
+        </ul>
+      </div>
+    </Suspense>
   );
 }
 
