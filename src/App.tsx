@@ -25,7 +25,7 @@ function App() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <div>
-        <h1>mai</h1>
+        <h1 className="text-red-500">Countries</h1>
         <ul>
           {countries.map((country) => (
             <li key={country.id}>{country.name}</li>
