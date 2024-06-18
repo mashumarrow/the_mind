@@ -5,7 +5,8 @@ export const GetCountries = async () => {
         console.log("Fetched data:", data);
         if(error){
             console.error("Fetch error:", error);
-        }return { data, error };  // dataとerrorの両方を返す
+        }
+        return { data, error };  // dataとerrorの両方を返す
     }
     
 
