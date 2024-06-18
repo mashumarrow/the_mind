@@ -17,6 +17,7 @@ function App() {
 
   return (
     <ul>
+      <h1>ayano</h1>
       {countries.map((country : any) => (
         <li key={country.name}>{country.name}</li>
       ))}
