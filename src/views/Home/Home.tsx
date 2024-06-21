@@ -1,5 +1,3 @@
-import { GetCountries } from "./hooks";
-import { Suspense, useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { MakeUser } from "./hooks";
 import Layout from "../../Layout";
