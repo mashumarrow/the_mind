@@ -1,15 +1,19 @@
 import React from "react";
-import Button from "../components/Button";
+import Button from "../../components/Button";
 import { useNavigate } from "react-router-dom";
 
-const Failure = () => {
+const Success = () => {
   const navigate = useNavigate();
   const handleClick = () => {
     console.log("ボタンがクリックされました");
     navigate("/");
   };
 
-  return <Button onClick={handleClick}>リトライ</Button>;
+  return (
+    <div>
+      <Button onClick={handleClick}>ホームヘ</Button>
+    </div>
+  );
 };
 
-export default Failure;
+export default Success;

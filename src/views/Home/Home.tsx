@@ -1,7 +1,7 @@
-import { GetCountries } from "../utils/functions/fetchCountries";
+import { GetCountries } from "./hooks";
 import { Suspense, useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { MakeUser } from "../utils/functions/postuser";
+import { MakeUser } from "./hooks";
 
 type Country = {
   id: number;
@@ -48,9 +48,12 @@ export const Home = () => {
           </ul>
         </Suspense>
 
-        <div className="flex flex-col justify-center items-center border">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <input {...register("name")} />
+        <div>
+          <form
+            className="flex flex-col justify-center items-center gap-5"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <input {...register("name")} className="border" />
             <button
               type="submit"
               className="bg-black text-white py-2 px-4 rounded"
