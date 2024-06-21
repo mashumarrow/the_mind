@@ -23,20 +23,18 @@ type CardComponentProps = {
 };
 
 const PlayerCardComponent: React.FC<CardComponentProps> = ({ imagePath }) => (
-  <Card sx={{ Width: 91, Height: 153 }}>
+  <Card sx={{ width: 91, height: 153 }}>
     <CardMedia
       component="img"
       sx={{ width: 67, height: 79, objectFit: "contain", mx: "auto", my: 2 }}
       image={imagePath}
       title="Player Image"
     />
-    <CardContent sx={{ marginTop: -2 }}>
-      <Typography gutterBottom variant="body1" component="div">
+    <CardContent sx={{ marginTop: -4 }}>
+      <Typography gutterBottom sx={{ fontSize: "16px", fontWeight: "bold" }} component="div">
         Player
       </Typography>
-      <Typography variant="body2" color="text.secondary">
-        test
-      </Typography>
+      <Typography sx={{ fontSize: "11px", fontWeight: "bold" }}>残り：１枚</Typography>
     </CardContent>
   </Card>
 );
