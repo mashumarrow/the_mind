@@ -3,11 +3,11 @@ import { supabase } from "../../utils/supabase";
 import { useContext, useEffect, useState } from "react";
 import { PaththeCard } from "./hooks";
 import { UserIdContext } from "../../Context";
-import React from "react";
-import Layout from "../../Layout";
+{/*import React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { CardMedia, Typography } from "@mui/material";
+*/}
 
 const Room = () => {
   const [isPathCard, setIsPathCard] = useState<boolean>(false);
@@ -15,7 +15,7 @@ const Room = () => {
   const [UserID] = useContext(UserIdContext);
   const navigate = useNavigate();
 
-  //5秒後にカードを配る　＊間開けないと他のユーザが配られたことを認識できないから。
+  //5秒後にカードを配る＊間開けないと他のユーザが配られたことを認識できないから。
   useEffect(() => {
     const timer = setTimeout(() => {
       const pathCard = async () => {
@@ -81,7 +81,7 @@ const Room = () => {
   );
 };
 
-type PlayerCardComponentProps = {
+{/*type PlayerCardComponentProps = {
   imagePath: string;
 };
 
@@ -183,5 +183,5 @@ const MyCardComponent: React.FC<MyCardComponentProps> = ({ MyCard }) => (
     </CardContent>
   </Card>
 );
-
+*/}
 export default Room;
