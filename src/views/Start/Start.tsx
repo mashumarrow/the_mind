@@ -19,12 +19,19 @@ type MyCard = {
   hand2: number | null;
 };
 
+type User = {
+  UserID: number;
+  name: string;
+};
+
 const Start = () => {
   const [UserID] = useContext(UserIdContext);
   const { id }: any = useParams();
   const [nowcard, setNowCard] = useState<number | null>(null); //場のカード
   const [MyCards, setMyCards] = useState<MyCard>({ hand1: null, hand2: null }); //手札
   const [remainingCards, setRemainingCards] = useState<number>(8); //チームの残りのカード
+  const [myName, setMyName] = useState<string>(""); //自分の名前
+  const [membersName, setMembersName] = useState<string[]>([]); //メンバーの名前
   const [possiblityOfSuccess, setpossiblityOfSuccess] = useState<
     boolean | null
   >(null); //成功できるかどうか
@@ -36,13 +43,20 @@ const Start = () => {
   useEffect(() => {
     const GetMyCards = async () => {
       const res: any = await GetUserCard(UserID);
-      console.log(res[0]);
+      //console.log(res[0]);
       setMyCards({ hand1: res[0].hand1, hand2: res[0].hand2 });
     };
     const GetUserName = async () => {
       const res: any = await GetUserNameonRoom(id);
-      console.log(res);
+      //console.log("res", res);
+      const myname = res.find((item: User) => item.UserID === UserID);
+      setMyName(myname.name); //自分の名前を取得
+      const membersName = res
+        .filter((item: User) => item.UserID !== UserID)
+        .map((item: { name: string }) => item.name);
+      setMembersName(membersName); //メンバーの名前を取得
     };
+
     //console.log(UserID);
     GetMyCards();
     GetUserName();
@@ -106,6 +120,28 @@ const Start = () => {
   }
 
   return (
+
+    {/*<div className="flex flex-col">
+      {MyCards.hand1 !== null && (
+        <button className="text-red-500" onClick={hand1}>
+          {MyCards.hand1}
+        </button>
+      )}
+      {MyCards.hand2 !== null && (
+        <button className="text-blue-500" onClick={hand2}>
+          {MyCards.hand2}
+        </button>
+      )}
+      <p className="text-green-500">{remainingCards}</p>
+      <p className="text-green-500">{myName}</p>
+      <p className="text-green-500">{membersName}</p>
+      {nowcard ? (
+        <p className="text-gray-500 text-3xl">{nowcard}</p>
+      ) : (
+        <p>まだ誰もだしていません</p>
+      )}
+    </div>*/}
+
     <Layout>
       <div className="flex flex-col items-center h-screen w-screen bg-amber-50 gap-10">
         <div className="flex justify-center w-full mt-10 space-x-4">
@@ -122,6 +158,7 @@ const Start = () => {
         </div>
       </div>
     </Layout>
+
   );
 };
 
