@@ -13,7 +13,7 @@ export const Home = () => {
   const {
     register,
     handleSubmit,
-    reset
+    reset,
     formState: { errors },
   } = useForm<Inputs>();
 
@@ -39,12 +39,13 @@ export const Home = () => {
   };
 
   return (
-
     <Layout>
       <div className="flex flex-col items-center h-screen w-screen bg-gradient-to-b from-pink-200 to-blue-400 gap-10">
         <div className="flex flex-col text-black">
           <p className="mt-40 text-7xl font-semibold">The Mind</p>
-          <p className="text-center text-lg font-semibold">ー ザ・マインド ー</p>
+          <p className="text-center text-lg font-semibold">
+            ー ザ・マインド ー
+          </p>
         </div>
 
         <div className="flex  mt-5 flex-col w-full">
@@ -57,8 +58,13 @@ export const Home = () => {
               className="border bg-white rounded w-2/3 h-11 px-3"
               placeholder="名前を入力してください"
             />
-            {errors.name && <p className="text-red-500">{errors.name.message}</p>}
-            <button type="submit" className="bg-black text-white py-2 px-4 rounded h-11 w-2/3">
+            {errors.name && (
+              <p className="text-red-500">{errors.name.message}</p>
+            )}
+            <button
+              type="submit"
+              className="bg-black text-white py-2 px-4 rounded h-11 w-2/3"
+            >
               ゲームを始める
             </button>
           </form>
@@ -66,7 +72,9 @@ export const Home = () => {
 
         <div className="relative flex items-center justify-center w-full px-5 gap-20">
           <hr className="flex-grow h-px bg-white border-t-2 dark:text-white"></hr>
-          <span className="absolute px-3 font-normal text-gray-900 dark:text-white">遊び方</span>
+          <span className="absolute px-3 font-normal text-gray-900 dark:text-white">
+            遊び方
+          </span>
           <hr className="flex-grow h-px bg-gray-200 border-t-2 dark:text-white"></hr>
         </div>
 
