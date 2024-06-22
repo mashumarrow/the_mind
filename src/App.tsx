@@ -1,39 +1,26 @@
-import { Suspense, useEffect, useState } from "react";
-import { GetCountries } from "./utils/functions/fetchCountries";
-
-type Country = {
-  id: number;
-  name: string;
-};
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Home } from "./views/Home/Home";
+import Success from "./views/Success/Success";
+import Failure from "./views/Failure/Failure";
+import Layout from "./Layout";
+import Room from "./views/Room/Room";
+import Waiting from "./views/Waiting/Waiting";
+import Start from "./views//Start/Start";
 
 function App() {
-  const [countries, setCountries] = useState<Country[]>([]);
-
-  useEffect(() => {
-    const getCountries = async () => {
-      const response = await GetCountries();
-      if (response.data) {
-        console.log(response.data);
-        setCountries(response.data);
-      } else {
-        console.log("No data found", response.error);
-      }
-    };
-    getCountries();
-  }, []);
-
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <div>
-        <h1 className="text-red-500">Countries</h1>
-        <ul>
-          {countries.map((country) => (
-            <li key={country.id}>{country.name}</li>
-          ))}
-        </ul>
-      </div>
-    </Suspense>
+    <Layout>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/waiting" element={<Waiting />} />
+          <Route path="/room/:id" element={<Room />} />
+          <Route path="/room/:id/start" element={<Start />} />
+          <Route path="/room/:id/success" element={<Success />} />
+          <Route path="/room/:id/failure" element={<Failure />} />
+        </Routes>
+      </BrowserRouter>
+    </Layout>
   );
 }
-
 export default App;
