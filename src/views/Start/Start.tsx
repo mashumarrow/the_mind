@@ -4,6 +4,7 @@ import {
   ChangeNowCard,
   CompareCards,
   GetUserCard,
+  GetUserNameonRoom,
   UpdateSuccess,
 } from "./hooks";
 import { supabase } from "../..//utils/supabase";
@@ -34,8 +35,13 @@ const Start = () => {
       console.log(res[0]);
       setMyCards({ hand1: res[0].hand1, hand2: res[0].hand2 });
     };
-    console.log(UserID);
+    const GetUserName = async () => {
+      const res: any = await GetUserNameonRoom(id);
+      console.log(res);
+    };
+    //console.log(UserID);
     GetMyCards();
+    GetUserName();
   }, []);
 
   //残りのカードが0なったら成功画面に遷移
