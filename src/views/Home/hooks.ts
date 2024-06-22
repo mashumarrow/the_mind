@@ -1,5 +1,6 @@
 import { supabase } from "../../utils/supabase";
 
+
 //この関数は、Form送信後に実行され、ユーザーを作成します。
 export const MakeUser = async (name : string) => {
     const { data, error } = await supabase.from('users').insert({name: name }).select('UserID, name')
