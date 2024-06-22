@@ -1,5 +1,47 @@
+import { useContext, useEffect, useState } from "react";
+import { RoomIdContext, UserIdContext } from "../../Context";
+import {
+  GetRoomAvailabilityonRealTime,
+  GetRoomAvailability,
+  AssignRoomIDtoUser,
+} from "./hooks";
+import { useNavigate } from "react-router-dom";
+
 const Waiting = () => {
+  const [RoomID] = useContext(RoomIdContext);
+  const [UserID] = useContext(UserIdContext);
+  const navigate = useNavigate();
+  const [isFill, setIsFill] = useState<boolean>(false);
+
+  useEffect(() => {
+    const GetRoomData = async () => {
+      const data = await GetRoomAvailability(RoomID);
+      if (data && data.length > 0 && data[0].hasOwnProperty("fill")) {
+        setIsFill(data[0].fill);
+      }
+    };
+    const AssignRoomID = async () => {
+      await AssignRoomIDtoUser(UserID, RoomID);
+    };
+    GetRoomData();
+    AssignRoomID();
+  }, []);
+
+  useEffect(() => {
+    const onRoomUpdate = (fill: boolean) => {
+      setIsFill(fill);
+    };
+    GetRoomAvailabilityonRealTime(RoomID, onRoomUpdate);
+  }, []);
+
+  useEffect(() => {
+    if (isFill) {
+      navigate(`/room/${RoomID}`);
+    }
+  }, [isFill]);
+
   return (
+    <div>
     <div className="flex flex-col items-center h-screen w-screen bg-amber-50 gap-10 ">
       <div className="  text-2xl  mt-[130px] mb-10">ローディング中</div>
       <div className="flex items-center justify-center mt-[-20px]">
@@ -26,6 +68,7 @@ const Waiting = () => {
       </div>
       <img className="object-contain" src="../src/assets/IMG_0214 1.png" />
       <div className="text-lg mt-4">人数が集まるまで待ってね</div>
+      </div>
     </div>
   );
 };
