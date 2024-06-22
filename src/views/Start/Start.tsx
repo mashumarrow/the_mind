@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { UserIdContext } from "../../Context";
 import {
-  ChangeNowCard,
+  //ChangeNowCard,//
   CompareCards,
   GetUserCard,
   GetUserNameonRoom,
@@ -9,6 +9,10 @@ import {
 } from "./hooks";
 import { supabase } from "../..//utils/supabase";
 import { useNavigate, useParams } from "react-router-dom";
+import Layout from "../../Layout";
+import { PlayerCardComponent } from "./components/PlayerCard";
+import { NowCardComponent } from "./components/NowCard";
+import { MyCardComponent } from "./components/MyCard";
 
 type MyCard = {
   hand1: number | null;
@@ -87,7 +91,8 @@ const Start = () => {
     .subscribe();
 
   //手札出す
-  const hand1 = async () => {
+  {
+    /* const hand1 = async () => {
     await ChangeNowCard(id, MyCards.hand1);
     MyCards.hand1 = null;
   };
@@ -97,6 +102,8 @@ const Start = () => {
     await ChangeNowCard(id, MyCards.hand2);
     MyCards.hand2 = null;
   };
+  */
+  }
 
   return (
     <Layout>
