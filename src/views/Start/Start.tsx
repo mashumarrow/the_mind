@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { UserIdContext } from "../../Context";
 import {
-  //ChangeNowCard,//
+  ChangeNowCard,
   CompareCards,
   GetUserCard,
   GetUserNameonRoom,
@@ -105,8 +105,7 @@ const Start = () => {
     .subscribe();
 
   //手札出す
-  {
-    /* const hand1 = async () => {
+  const hand1 = async () => {
     await ChangeNowCard(id, MyCards.hand1);
     MyCards.hand1 = null;
   };
@@ -116,49 +115,42 @@ const Start = () => {
     await ChangeNowCard(id, MyCards.hand2);
     MyCards.hand2 = null;
   };
-  */
-  }
 
   return (
-
-    {/*<div className="flex flex-col">
-      {MyCards.hand1 !== null && (
-        <button className="text-red-500" onClick={hand1}>
-          {MyCards.hand1}
-        </button>
-      )}
-      {MyCards.hand2 !== null && (
-        <button className="text-blue-500" onClick={hand2}>
-          {MyCards.hand2}
-        </button>
-      )}
-      <p className="text-green-500">{remainingCards}</p>
-      <p className="text-green-500">{myName}</p>
-      <p className="text-green-500">{membersName}</p>
-      {nowcard ? (
-        <p className="text-gray-500 text-3xl">{nowcard}</p>
-      ) : (
-        <p>まだ誰もだしていません</p>
-      )}
-    </div>*/}
-
-    <Layout>
-      <div className="flex flex-col items-center h-screen w-screen bg-amber-50 gap-10">
-        <div className="flex justify-center w-full mt-10 space-x-4">
-          <PlayerCardComponent imagePath="../src/assets/player1.svg" />
-          <PlayerCardComponent imagePath="../src/assets/player2.svg" />
-          <PlayerCardComponent imagePath="../src/assets/player3.svg" />
-        </div>
-        <div>
-          <NowCardComponent NowCard={20} />
-        </div>
-        <div className="flex justify-center w-full mt-10 space-x-10">
-          <MyCardComponent MyCard={10} />
-          <MyCardComponent MyCard={20} />
-        </div>
+    <>
+      <div className="flex flex-col">
+        {MyCards.hand1 !== null && (
+          <button className="text-red-500" onClick={hand1}>
+            {MyCards.hand1}
+          </button>
+        )}
+        {MyCards.hand2 !== null && (
+          <button className="text-blue-500" onClick={hand2}>
+            {MyCards.hand2}
+          </button>
+        )}
+        <p className="text-green-500">{remainingCards}</p>
+        <p className="text-green-500">{myName}</p>
+        <p className="text-green-500">{membersName}</p>
       </div>
-    </Layout>
 
+      <Layout>
+        <div className="flex flex-col items-center h-screen w-screen bg-amber-50 gap-10">
+          <div className="flex justify-center w-full mt-10 space-x-4">
+            <PlayerCardComponent imagePath="../src/assets/player1.svg" />
+            <PlayerCardComponent imagePath="../src/assets/player2.svg" />
+            <PlayerCardComponent imagePath="../src/assets/player3.svg" />
+          </div>
+          <div>
+            <NowCardComponent NowCard={nowcard} />
+          </div>
+          <div className="flex justify-center w-full mt-10 space-x-10">
+            <MyCardComponent MyCard={MyCards.hand1} />
+            <MyCardComponent MyCard={MyCards.hand2} />
+          </div>
+        </div>
+      </Layout>
+    </>
   );
 };
 

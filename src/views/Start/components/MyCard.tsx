@@ -1,7 +1,7 @@
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 
 type MyCardComponentProps = {
-  MyCard: number;
+  MyCard: number | null;
 };
 
 export const MyCardComponent: React.FC<MyCardComponentProps> = ({ MyCard }) => (
