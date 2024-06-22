@@ -6,6 +6,7 @@ import Layout from "./Layout";
 import Room from "./views/Room/Room";
 import Waiting from "./views/Waiting/Waiting";
 import Start from "./views//Start/Start";
+import ModalCard from "./views/Start/components/Modal";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/room/:id/start" element={<Start />} />
           <Route path="/room/:id/success" element={<Success />} />
           <Route path="/room/:id/failure" element={<Failure />} />
+          <Route path="/modal" element={<ModalCard />} />
         </Routes>
       </BrowserRouter>
     </Layout>

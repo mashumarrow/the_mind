@@ -13,6 +13,7 @@ import Layout from "../../Layout";
 import { PlayerCardComponent } from "./components/PlayerCard";
 import { NowCardComponent } from "./components/NowCard";
 import { MyCardComponent } from "./components/MyCard";
+import { Modal } from "@mui/material";
 
 type MyCard = {
   hand1: number | null;
