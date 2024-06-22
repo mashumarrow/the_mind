@@ -43,11 +43,11 @@ const AssignMembertoRoom = async (id : string, UserID : number) => {
     }else{
         try{
             if(data[0].person_two === null){
-                await JoinRoom(UserID, id, 'person_two')
+                await JoinRoom(UserID, id, 'person_two', 2)
             }else if(data[0].person_third === null){
-                await JoinRoom(UserID, id, 'person_third')
+                await JoinRoom(UserID, id, 'person_third', 1)
             }else if(data[0].person_four === null){
-                await JoinRoom(UserID, id, 'person_four')
+                await JoinRoom(UserID, id, 'person_four', 0)
             }
         } catch (error) {
             console.error("部屋の割り当てに失敗しました。", error);
@@ -56,8 +56,8 @@ const AssignMembertoRoom = async (id : string, UserID : number) => {
 }
 
 //この関数は、部屋の割り当てと4人目を割り当てる際に部屋が埋まったことを伝えます。
-const JoinRoom = async (UserID : number, id : string, number : string) => {
-    const updatedata : any= { [number] : UserID }
+const JoinRoom = async (UserID : number, id : string, number : string, vacant : number) => {
+    const updatedata : any= { [number] : UserID, 'vacantplayer' : vacant }
     if (number === 'person_four') {
         updatedata['fill'] = true
     }
