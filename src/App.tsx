@@ -5,6 +5,7 @@ import Failure from "./views/Failure/Failure";
 import Layout from "./Layout";
 import Room from "./views/Room/Room";
 import Waiting from "./views/Waiting/Waiting";
+import Start from "./views//Start/Start";
 
 function App() {
   return (
@@ -14,8 +15,9 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/waiting" element={<Waiting />} />
           <Route path="/room/:id" element={<Room />} />
-          <Route path="/success" element={<Success />} />
-          <Route path="/failure" element={<Failure />} />
+          <Route path="/room/:id/start" element={<Start />} />
+          <Route path="/room/:id/success" element={<Success />} />
+          <Route path="/room/:id/failure" element={<Failure />} />
         </Routes>
       </BrowserRouter>
     </Layout>
