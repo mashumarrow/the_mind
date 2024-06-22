@@ -43,3 +43,15 @@ export const UpdateSuccess = async (RoomID : string, posiblity : boolean | null)
       console.log('成功可能性の更新に成功。');
     }
 }
+
+export const GetUserNameonRoom = async (RoomID : string) => {
+  const { data, error } = await supabase.from("users").select("UserId, name").eq("RoomID", RoomID);
+  if (data) {
+    console.log(`${RoomID}のユーザー名を取得`,data)
+    //return data
+  } else {
+    console.log('ユーザー名の取得失敗',error);
+    return error
+  }
+  ;
+}
