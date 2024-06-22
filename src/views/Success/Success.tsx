@@ -1,7 +1,6 @@
 import Layout from "../../Layout";
 import Button from "../../components/Button";
 import { useNavigate } from "react-router-dom";
-import React from "react";
 import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
 
