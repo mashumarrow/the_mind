@@ -10,7 +10,6 @@ import CardContent from "@mui/material/CardContent";
 import { CardMedia, Typography } from "@mui/material";
 
 const Room = () => {
-  
   const [isPathCard, setIsPathCard] = useState<boolean>(false);
   const { id }: any = useParams();
   const [UserID] = useContext(UserIdContext);
@@ -43,24 +42,42 @@ const Room = () => {
       }
     )
     .subscribe();
-  
+
   return (
-    <Layout>
-      <div className="flex flex-col items-center h-screen w-screen bg-amber-50 gap-10">
-        <div className="flex justify-center w-full mt-10 space-x-4">
-          <PlayerCardComponent imagePath="../src/assets/player1.svg" />
-          <PlayerCardComponent imagePath="../src/assets/player2.svg" />
-          <PlayerCardComponent imagePath="../src/assets/player3.svg" />
+    <div>
+      <div className="flex flex-col items-center h-screen w-screen bg-amber-50 gap-10 ">
+        <div className="  text-2xl  mt-[130px] mb-10">人数が揃いました</div>
+        <div className="flex items-center justify-center mt-[-20px]">
+          <svg
+            className="animate-spin h-10 w-10 text-black-500"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            ></circle>
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
         </div>
-        <div>
-          <NowCardComponent NowCard={20} />
-        </div>
-        <div className="flex justify-center w-full mt-10 space-x-10">
-          <MyCardComponent MyCard={10} />
-          <MyCardComponent MyCard={20} />
-        </div>
+        <img
+          className="object-contain"
+          src="../src/assets/deal_the_cards.png"
+          width={180}
+          height={180}
+        />
+        <div className="text-lg mt-4">カード配布中</div>
       </div>
-    </Layout>
+    </div>
   );
 };
 
@@ -68,7 +85,9 @@ type PlayerCardComponentProps = {
   imagePath: string;
 };
 
-const PlayerCardComponent: React.FC<PlayerCardComponentProps> = ({ imagePath }) => (
+const PlayerCardComponent: React.FC<PlayerCardComponentProps> = ({
+  imagePath,
+}) => (
   <Card sx={{ width: 91, height: 153, border: "1px solid black" }}>
     <CardMedia
       component="img"
@@ -77,10 +96,16 @@ const PlayerCardComponent: React.FC<PlayerCardComponentProps> = ({ imagePath }) 
       title="Player Image"
     />
     <CardContent sx={{ marginTop: -4 }}>
-      <Typography gutterBottom sx={{ fontSize: "16px", fontWeight: "bold" }} component="div">
+      <Typography
+        gutterBottom
+        sx={{ fontSize: "16px", fontWeight: "bold" }}
+        component="div"
+      >
         Player
       </Typography>
-      <Typography sx={{ fontSize: "11px", fontWeight: "bold" }}>残り：１枚</Typography>
+      <Typography sx={{ fontSize: "11px", fontWeight: "bold" }}>
+        残り：１枚
+      </Typography>
     </CardContent>
   </Card>
 );
@@ -112,7 +137,10 @@ const NowCardComponent: React.FC<NowCardComponentProps> = ({ NowCard }) => (
         textAlign: "center",
       }}
     >
-      <Typography variant="h3" sx={{ fontSize: "55px", fontWeight: "bold", lineHeight: 1 }}>
+      <Typography
+        variant="h3"
+        sx={{ fontSize: "55px", fontWeight: "bold", lineHeight: 1 }}
+      >
         {NowCard}
       </Typography>
     </CardContent>
@@ -146,7 +174,10 @@ const MyCardComponent: React.FC<MyCardComponentProps> = ({ MyCard }) => (
         textAlign: "center",
       }}
     >
-      <Typography variant="h3" sx={{ fontSize: "44px", fontWeight: "bold", lineHeight: 1 }}>
+      <Typography
+        variant="h3"
+        sx={{ fontSize: "44px", fontWeight: "bold", lineHeight: 1 }}
+      >
         {MyCard}
       </Typography>
     </CardContent>
