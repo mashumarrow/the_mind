@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { UserIdContext } from "../../Context";
 import {
-  ChangeNowCard,
+  //ChangeNowCard,//
   CompareCards,
   GetUserCard,
   GetUserNameonRoom,
@@ -9,6 +9,10 @@ import {
 } from "./hooks";
 import { supabase } from "../..//utils/supabase";
 import { useNavigate, useParams } from "react-router-dom";
+import Layout from "../../Layout";
+import { PlayerCardComponent } from "./components/PlayerCard";
+import { NowCardComponent } from "./components/NowCard";
+import { MyCardComponent } from "./components/MyCard";
 
 type MyCard = {
   hand1: number | null;
@@ -101,7 +105,8 @@ const Start = () => {
     .subscribe();
 
   //手札出す
-  const hand1 = async () => {
+  {
+    /* const hand1 = async () => {
     await ChangeNowCard(id, MyCards.hand1);
     MyCards.hand1 = null;
   };
@@ -111,9 +116,12 @@ const Start = () => {
     await ChangeNowCard(id, MyCards.hand2);
     MyCards.hand2 = null;
   };
+  */
+  }
 
   return (
-    <div className="flex flex-col">
+
+    {/*<div className="flex flex-col">
       {MyCards.hand1 !== null && (
         <button className="text-red-500" onClick={hand1}>
           {MyCards.hand1}
@@ -132,7 +140,25 @@ const Start = () => {
       ) : (
         <p>まだ誰もだしていません</p>
       )}
-    </div>
+    </div>*/}
+
+    <Layout>
+      <div className="flex flex-col items-center h-screen w-screen bg-amber-50 gap-10">
+        <div className="flex justify-center w-full mt-10 space-x-4">
+          <PlayerCardComponent imagePath="../src/assets/player1.svg" />
+          <PlayerCardComponent imagePath="../src/assets/player2.svg" />
+          <PlayerCardComponent imagePath="../src/assets/player3.svg" />
+        </div>
+        <div>
+          <NowCardComponent NowCard={20} />
+        </div>
+        <div className="flex justify-center w-full mt-10 space-x-10">
+          <MyCardComponent MyCard={10} />
+          <MyCardComponent MyCard={20} />
+        </div>
+      </div>
+    </Layout>
+
   );
 };
 
