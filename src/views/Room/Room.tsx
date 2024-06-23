@@ -3,11 +3,13 @@ import { supabase } from "../../utils/supabase";
 import { useContext, useEffect, useState } from "react";
 import { PaththeCard } from "./hooks";
 import { UserIdContext } from "../../Context";
-{/*import React from "react";
+{
+  /*import React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { CardMedia, Typography } from "@mui/material";
-*/}
+*/
+}
 
 const Room = () => {
   const [isPathCard, setIsPathCard] = useState<boolean>(false);
@@ -70,7 +72,7 @@ const Room = () => {
           </svg>
         </div>
         <img
-          className="object-contain"
+          className="object-contain animate-wobble-ver-right"
           src="../src/assets/deal_the_cards.png"
           width={180}
           height={180}
@@ -81,7 +83,8 @@ const Room = () => {
   );
 };
 
-{/*type PlayerCardComponentProps = {
+{
+  /*type PlayerCardComponentProps = {
   imagePath: string;
 };
 
@@ -183,5 +186,6 @@ const MyCardComponent: React.FC<MyCardComponentProps> = ({ MyCard }) => (
     </CardContent>
   </Card>
 );
-*/}
+*/
+}
 export default Room;

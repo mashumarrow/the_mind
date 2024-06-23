@@ -14,7 +14,7 @@ export const NowCardComponent: React.FC<NowCardComponentProps> = ({
       <Card sx={{ width: 160, height: 250, position: "relative" }}>
         <CardMedia
           component="img"
-          image="../src/assets/now_card.svg"
+          image="../../src/assets/now_card.svg"
           sx={{ width: "100%", height: "100%", objectFit: "contain" }}
           title="Player Image"
         />

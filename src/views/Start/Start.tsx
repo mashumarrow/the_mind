@@ -9,6 +9,9 @@ import {
 } from "./hooks";
 import { supabase } from "../..//utils/supabase";
 import { useNavigate, useParams } from "react-router-dom";
+//import happy from "../../assets/happy.png";
+//import cry from "../../assets/cry.png";
+//import niyari from "../../assets/niyari.png";
 import Layout from "../../Layout";
 import { PlayerCardComponent } from "./components/PlayerCard";
 import { NowCardComponent } from "./components/NowCard";
@@ -36,6 +39,13 @@ const Start = () => {
     boolean | null
   >(null); //成功できるかどうか
   const navigate = useNavigate();
+
+  const images = [
+    { id: 1, src: "../../src/assets/happy.png" },
+    { id: 2, src: "../../src/assets/cry.png" },
+    { id: 3, src: "../../src/assets/niyari.png" },
+  ];
+  const [selectedImageId, setSelectedImageId] = useState<number | null>(null);
 
   //console.log(id);
 
@@ -116,6 +126,28 @@ const Start = () => {
     MyCards.hand2 = null;
   };
 
+  //スタンプ選ぶ
+
+  // 画像がクリックされたとき
+  const handleImageClick = async (imageId: number) => {
+    try {
+      // Supabaseに画像IDを保存
+      const { data, error } = await supabase
+        .from("users")
+        .insert([{ stamp: imageId }]);
+
+      if (error) {
+        console.error("エラー", error);
+      } else {
+        console.log("Data inserted:", data);
+        // 画像IDを状態に設定して、選択された画像を表示
+        setSelectedImageId(imageId);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <>
       <div className="flex flex-col">
@@ -129,17 +161,17 @@ const Start = () => {
             {MyCards.hand2}
           </button>
         )}
-        <p className="text-green-500">{remainingCards}</p>
+
         <p className="text-green-500">{myName}</p>
         <p className="text-green-500">{membersName}</p>
       </div>
 
       <Layout>
-        <div className="flex flex-col items-center h-screen w-screen bg-amber-50 gap-10">
+        <div className="flex flex-col items-center  h-screen w-screen bg-amber-50 gap-10">
           <div className="flex justify-center w-full mt-10 space-x-4">
-            <PlayerCardComponent imagePath="../src/assets/player1.svg" />
-            <PlayerCardComponent imagePath="../src/assets/player2.svg" />
-            <PlayerCardComponent imagePath="../src/assets/player3.svg" />
+            <PlayerCardComponent imagePath="../../src/assets/player1.svg" />
+            <PlayerCardComponent imagePath="../../src/assets/player2.svg" />
+            <PlayerCardComponent imagePath="../../src/assets/player3.svg" />
           </div>
           <div>
             <NowCardComponent NowCard={nowcard} />
@@ -147,6 +179,19 @@ const Start = () => {
           <div className="flex justify-center w-full mt-10 space-x-10">
             <MyCardComponent MyCard={MyCards.hand1} />
             <MyCardComponent MyCard={MyCards.hand2} />
+          </div>
+          <div className="relative flex space-x-4 -mt-4">
+            {images.map(
+              (image) =>
+                (selectedImageId === null || selectedImageId === image.id) && (
+                  <img
+                    key={image.id}
+                    src={image.src}
+                    className=" w-32 h-auto cursor-pointer object-contain max-w-ful"
+                    onClick={() => handleImageClick(image.id)}
+                  />
+                )
+            )}
           </div>
         </div>
       </Layout>

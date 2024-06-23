@@ -8,7 +8,7 @@ export const MyCardComponent: React.FC<MyCardComponentProps> = ({ MyCard }) => (
   <Card sx={{ width: 110, height: 146, position: "relative" }}>
     <CardMedia
       component="img"
-      image="../src/assets/hand1.svg"
+      image="../../src/assets/hand1.svg"
       sx={{ width: "100%", height: "100%", objectFit: "contain" }}
       title="Player Image"
     />
