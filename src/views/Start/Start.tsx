@@ -17,7 +17,6 @@ import { PlayerCardComponent } from "./components/PlayerCard";
 import { NowCardComponent } from "./components/NowCard";
 import { MyCardComponent } from "./components/MyCard";
 
-
 type MyCard = {
   hand1: number | null;
   hand2: number | null;
@@ -150,7 +149,6 @@ const Start = () => {
   };
 
   return (
-
     <>
       <div className="flex flex-col">
         {MyCards.hand1 !== null && (
@@ -163,7 +161,7 @@ const Start = () => {
             {MyCards.hand2}
           </button>
         )}
-        <p className="text-green-500">{remainingCards}</p>
+
         <p className="text-green-500">{myName}</p>
         <p className="text-green-500">{membersName}</p>
       </div>
@@ -184,19 +182,19 @@ const Start = () => {
           </div>
         </div>
       </Layout>
-        <div className="flex space-x-4">
-          {images.map(
-            (image) =>
-              (selectedImageId === null || selectedImageId === image.id) && (
-                <img
+      <div className="flex space-x-4">
+        {images.map(
+          (image) =>
+            (selectedImageId === null || selectedImageId === image.id) && (
+              <img
                 key={image.id}
                 src={image.src}
                 className=" cursor-pointer"
                 onClick={() => handleImageClick(image.id)}
-                />
-              )
-          )}
-        </div>
+              />
+            )
+        )}
+      </div>
     </>
   );
 };
