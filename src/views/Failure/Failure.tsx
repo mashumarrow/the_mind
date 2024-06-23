@@ -22,7 +22,9 @@ const Failure = () => {
         >
           失敗
         </p>
-        <Button onClick={handleClick}>リトライ</Button>
+        <div className="animate-pulsate-bck">
+          <Button onClick={handleClick}>リトライ</Button>
+        </div>
       </div>
     </Layout>
   );

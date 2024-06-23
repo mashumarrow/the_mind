@@ -31,7 +31,8 @@ const Success = () => {
         text-black
         font-mono
         italic
-        mb-10"
+        mb-10
+        animate-tracking-in-expand"
         >
           Clear!
         </p>
