@@ -45,10 +45,10 @@ export const UpdateSuccess = async (RoomID : string, posiblity : boolean | null)
 }
 
 export const GetUserNameonRoom = async (RoomID : string) => {
-  const { data, error } = await supabase.from("users").select("UserId, name").eq("RoomID", RoomID);
+  const { data, error } = await supabase.from("users").select("UserID, name").eq("RoomID", RoomID);
   if (data) {
     console.log(`${RoomID}のユーザー名を取得`,data)
-    //return data
+    return data
   } else {
     console.log('ユーザー名の取得失敗',error);
     return error
