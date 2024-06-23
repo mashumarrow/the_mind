@@ -41,9 +41,9 @@ const Start = () => {
   const navigate = useNavigate();
 
   const images = [
-    { id: 1, src: "../assets/happy.png" },
-    { id: 2, src: "../assets/cry.png" },
-    { id: 3, src: "../assets/niyari.png" },
+    { id: 1, src: "../../src/assets/happy.png" },
+    { id: 2, src: "../../src/assets/cry.png" },
+    { id: 3, src: "../../src/assets/niyari.png" },
   ];
   const [selectedImageId, setSelectedImageId] = useState<number | null>(null);
 
@@ -167,11 +167,11 @@ const Start = () => {
       </div>
 
       <Layout>
-        <div className="flex flex-col items-center h-screen w-screen bg-amber-50 gap-10">
+        <div className="flex flex-col items-center  h-screen w-screen bg-amber-50 gap-10">
           <div className="flex justify-center w-full mt-10 space-x-4">
-            <PlayerCardComponent imagePath="../src/assets/player1.svg" />
-            <PlayerCardComponent imagePath="../src/assets/player2.svg" />
-            <PlayerCardComponent imagePath="../src/assets/player3.svg" />
+            <PlayerCardComponent imagePath="../../src/assets/player1.svg" />
+            <PlayerCardComponent imagePath="../../src/assets/player2.svg" />
+            <PlayerCardComponent imagePath="../../src/assets/player3.svg" />
           </div>
           <div>
             <NowCardComponent NowCard={nowcard} />
@@ -180,21 +180,21 @@ const Start = () => {
             <MyCardComponent MyCard={MyCards.hand1} />
             <MyCardComponent MyCard={MyCards.hand2} />
           </div>
+          <div className="relative flex space-x-4 -mt-4">
+            {images.map(
+              (image) =>
+                (selectedImageId === null || selectedImageId === image.id) && (
+                  <img
+                    key={image.id}
+                    src={image.src}
+                    className=" w-32 h-auto cursor-pointer object-contain max-w-ful"
+                    onClick={() => handleImageClick(image.id)}
+                  />
+                )
+            )}
+          </div>
         </div>
       </Layout>
-      <div className="flex space-x-4">
-        {images.map(
-          (image) =>
-            (selectedImageId === null || selectedImageId === image.id) && (
-              <img
-                key={image.id}
-                src={image.src}
-                className=" cursor-pointer"
-                onClick={() => handleImageClick(image.id)}
-              />
-            )
-        )}
-      </div>
     </>
   );
 };
