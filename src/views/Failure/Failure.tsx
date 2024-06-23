@@ -17,11 +17,14 @@ const Failure = () => {
         font-extrabold
         text-white
         font-mono
-        mb-10"
+        mb-10
+        animate-bounce-top"
         >
           失敗
         </p>
-        <Button onClick={handleClick}>リトライ</Button>
+        <div className="animate-pulsate-bck">
+          <Button onClick={handleClick}>リトライ</Button>
+        </div>
       </div>
     </Layout>
   );
