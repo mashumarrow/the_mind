@@ -9,6 +9,9 @@ import {
 } from "./hooks";
 import { supabase } from "../..//utils/supabase";
 import { useNavigate, useParams } from "react-router-dom";
+//import happy from "../../assets/happy.png";
+//import cry from "../../assets/cry.png";
+//import niyari from "../../assets/niyari.png";
 
 type MyCard = {
   hand1: number | null;
@@ -25,6 +28,13 @@ const Start = () => {
     boolean | null
   >(null); //成功できるかどうか
   const navigate = useNavigate();
+
+  const images = [
+    { id: 1, src: "../assets/happy.png" },
+    { id: 2, src: "../assets/cry.png" },
+    { id: 3, src: "../assets/niyari.png" },
+  ];
+  const [selectedImageId, setSelectedImageId] = useState<number | null>(null);
 
   //console.log(id);
 
@@ -98,6 +108,28 @@ const Start = () => {
     MyCards.hand2 = null;
   };
 
+  //スタンプ選ぶ
+
+  // 画像がクリックされたとき
+  const handleImageClick = async (imageId: number) => {
+    try {
+      // Supabaseに画像IDを保存
+      const { data, error } = await supabase
+        .from("users")
+        .insert([{ stamp: imageId }]);
+
+      if (error) {
+        console.error("エラー", error);
+      } else {
+        console.log("Data inserted:", data);
+        // 画像IDを状態に設定して、選択された画像を表示
+        setSelectedImageId(imageId);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <div className="flex flex-col">
       {MyCards.hand1 !== null && (
@@ -116,6 +148,20 @@ const Start = () => {
       ) : (
         <p>まだ誰もだしていません</p>
       )}
+
+      <div className="flex space-x-4">
+        {images.map(
+          (image) =>
+            (selectedImageId === null || selectedImageId === image.id) && (
+              <img
+                key={image.id}
+                src={image.src}
+                className=" cursor-pointer"
+                onClick={() => handleImageClick(image.id)}
+              />
+            )
+        )}
+      </div>
     </div>
   );
 };
