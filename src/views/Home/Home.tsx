@@ -30,7 +30,7 @@ export const Home = () => {
           >
             <input
               {...register("name")}
-              className="border bg-white rounded w-2/3 h-11 px-3"
+              className="border bg-white text-black rounded w-2/3 h-11 px-3"
               placeholder="名前を入力してください"
             />
             <button type="submit" className="bg-black text-white py-2 px-4 rounded h-11 w-2/3">
