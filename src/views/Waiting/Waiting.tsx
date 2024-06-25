@@ -7,6 +7,7 @@ import {
   GetRoomVacant,
 } from "./hooks";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "../../utils/supabase";
 
 const Waiting = () => {
   const [RoomID] = useContext(RoomIdContext);
@@ -50,6 +51,10 @@ const Waiting = () => {
     }
   }, [isFill]);
 
+  const { data } = supabase.storage
+    .from("avatars/image")
+    .getPublicUrl("IMG_0214 1.png");
+
   return (
     <div>
       <div className="flex flex-col items-center h-screen w-screen bg-amber-50 gap-10 ">
@@ -76,7 +81,12 @@ const Waiting = () => {
             ></path>
           </svg>
         </div>
-        <img className="object-contain" src="../src/assets/IMG_0214 1.png" />
+        <img
+          className="object-contain"
+          width={150}
+          height={150}
+          src={data.publicUrl}
+        />
         <div className="text-lg mt-4">あと{vacant}人待ってね</div>
       </div>
     </div>

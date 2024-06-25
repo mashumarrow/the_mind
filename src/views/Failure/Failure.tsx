@@ -9,6 +9,10 @@ const Failure = () => {
     navigate("/");
   };
 
+  // const { data } = supabase.storage
+  //  .from("avatars/image")
+  //.getPublicUrl("syobon.jpg");
+
   return (
     <Layout>
       <div className="flex flex-col items-center justify-center h-screen w-screen bg-[url(../src/assets/syobon.jpg)]">

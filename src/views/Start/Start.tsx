@@ -17,6 +17,25 @@ import { PlayerCardComponent } from "./components/PlayerCard";
 import { NowCardComponent } from "./components/NowCard";
 import { MyCardComponent } from "./components/MyCard";
 
+const { data } = supabase.storage
+  .from("avatars/image")
+  .getPublicUrl("player.jpg");
+
+{
+  /*const { happyface } = supabase.storage
+  .from("avatars/image")
+  .getPublicUrl("happy.png");
+
+const { cryface } = supabase.storage
+  .from("avatars/image")
+  .getPublicUrl("cry.png");
+
+const { data } = supabase.storage
+  .from("avatars/image")
+  .getPublicUrl("niyari.png");
+*/
+}
+
 type MyCard = {
   hand1: number | null;
   hand2: number | null;
@@ -41,9 +60,9 @@ const Start = () => {
   const navigate = useNavigate();
 
   const images = [
-    { id: 1, src: "../../src/assets/happy.png" },
-    { id: 2, src: "../../src/assets/cry.png" },
-    { id: 3, src: "../../src/assets/niyari.png" },
+    { id: 1, src: ".../../src/assets/happy.png" },
+    { id: 2, src: data.publicUrl },
+    { id: 3, src: data.publicUrl },
   ];
   const [selectedImageId, setSelectedImageId] = useState<number | null>(null);
 
@@ -169,9 +188,9 @@ const Start = () => {
       <Layout>
         <div className="flex flex-col items-center  h-screen w-screen bg-amber-50 gap-10">
           <div className="flex justify-center w-full mt-10 space-x-4">
-            <PlayerCardComponent imagePath="../../src/assets/player1.svg" />
-            <PlayerCardComponent imagePath="../../src/assets/player2.svg" />
-            <PlayerCardComponent imagePath="../../src/assets/player3.svg" />
+            <PlayerCardComponent imagePath={data.publicUrl} />
+            <PlayerCardComponent imagePath={data.publicUrl} />
+            <PlayerCardComponent imagePath={data.publicUrl} />
           </div>
           <div>
             <NowCardComponent NowCard={nowcard} />

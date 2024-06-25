@@ -15,10 +15,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/waiting" element={<Waiting />} />
-          <Route path="/room/:id" element={<Room />} />
-          <Route path="/room/:id/start" element={<Start />} />
-          <Route path="/room/:id/success" element={<Success />} />
-          <Route path="/room/:id/failure" element={<Failure />} />
+          <Route path="/room" element={<Room />} />
+          <Route path="/start" element={<Start />} />
+          <Route path="/success" element={<Success />} />
+          <Route path="/failure" element={<Failure />} />
           <Route path="/modal" element={<ModalCard />} />
         </Routes>
       </BrowserRouter>
