@@ -52,8 +52,6 @@ export const Home = () => {
             onSubmit={handleSubmit(onSubmit)}
           >
             <input
-              {...register("name")}
-              className="border bg-white text-black rounded w-2/3 h-11 px-3"
               {...register("name", { required: "名前を入力してください" })}
               className="border bg-white rounded w-2/3 h-11 px-3"
               placeholder="名前を入力してください"

@@ -5,6 +5,7 @@ import {
   CompareCards,
   GetUserCard,
   GetUserNameonRoom,
+  GetUserNumberofCards,
   UpdateSuccess,
 } from "./hooks";
 import { supabase } from "../..//utils/supabase";
@@ -25,6 +26,13 @@ type MyCard = {
 type User = {
   UserID: number;
   name: string;
+  hand1: number | null;
+  hand2: number | null;
+};
+
+type Member = {
+  name: string;
+  numberofcards: number;
 };
 
 const Start = () => {
@@ -32,12 +40,10 @@ const Start = () => {
   const { id }: any = useParams();
   const [nowcard, setNowCard] = useState<number | null>(null); //場のカード
   const [MyCards, setMyCards] = useState<MyCard>({ hand1: null, hand2: null }); //手札
+  const [Members, setMembers] = useState<Member[]>([]); //メンバーの名前とカードの枚数
   const [remainingCards, setRemainingCards] = useState<number>(8); //チームの残りのカード
   const [myName, setMyName] = useState<string>(""); //自分の名前
-  const [membersName, setMembersName] = useState<string[]>([]); //メンバーの名前
-  const [possiblityOfSuccess, setpossiblityOfSuccess] = useState<
-    boolean | null
-  >(null); //成功できるかどうか
+  const [possiblityOfSuccess, setpossiblityOfSuccess] = useState<boolean | null>(null); //成功できるかどうか
   const navigate = useNavigate();
 
   const images = [
@@ -56,20 +62,32 @@ const Start = () => {
       //console.log(res[0]);
       setMyCards({ hand1: res[0].hand1, hand2: res[0].hand2 });
     };
+
     const GetUserName = async () => {
       const res: any = await GetUserNameonRoom(id);
-      //console.log("res", res);
+
       const myname = res.find((item: User) => item.UserID === UserID);
       setMyName(myname.name); //自分の名前を取得
-      const membersName = res
-        .filter((item: User) => item.UserID !== UserID)
-        .map((item: { name: string }) => item.name);
-      setMembersName(membersName); //メンバーの名前を取得
     };
 
-    //console.log(UserID);
+    const GetUserCards = async () => {
+      const res: any = await GetUserNumberofCards(id);
+      const members = res
+        .filter((item: User) => item.UserID !== UserID)
+        .map((item: User) => {
+          const numberOfCards = [item.hand1, item.hand2].filter((card) => card !== null).length;
+          return { name: item.name, numberofcards: numberOfCards };
+        });
+
+      setMembers(members); // メンバーの名前と手札の枚数を格納
+
+      // console.log("res", res);
+    };
+
+    GetUserCards();
     GetMyCards();
     GetUserName();
+    // console.log("Members:", Members);
   }, []);
 
   //残りのカードが0なったら成功画面に遷移
@@ -132,9 +150,7 @@ const Start = () => {
   const handleImageClick = async (imageId: number) => {
     try {
       // Supabaseに画像IDを保存
-      const { data, error } = await supabase
-        .from("users")
-        .insert([{ stamp: imageId }]);
+      const { data, error } = await supabase.from("users").insert([{ stamp: imageId }]);
 
       if (error) {
         console.error("エラー", error);
@@ -150,7 +166,7 @@ const Start = () => {
 
   return (
     <>
-      <div className="flex flex-col">
+      <div className="flex flex-raw">
         {MyCards.hand1 !== null && (
           <button className="text-red-500" onClick={hand1}>
             {MyCards.hand1}
@@ -161,17 +177,26 @@ const Start = () => {
             {MyCards.hand2}
           </button>
         )}
-
-        <p className="text-green-500">{myName}</p>
-        <p className="text-green-500">{membersName}</p>
       </div>
 
       <Layout>
         <div className="flex flex-col items-center  h-screen w-screen bg-amber-50 gap-10">
           <div className="flex justify-center w-full mt-10 space-x-4">
-            <PlayerCardComponent imagePath="../../src/assets/player1.svg" />
-            <PlayerCardComponent imagePath="../../src/assets/player2.svg" />
-            <PlayerCardComponent imagePath="../../src/assets/player3.svg" />
+            <PlayerCardComponent
+              imagePath="../../src/assets/player1.svg"
+              name={Members[0]?.name}
+              numberofcards={Members[0]?.numberofcards}
+            />
+            <PlayerCardComponent
+              imagePath="../../src/assets/player2.svg"
+              name={Members[1]?.name}
+              numberofcards={Members[1]?.numberofcards}
+            />
+            <PlayerCardComponent
+              imagePath="../../src/assets/player3.svg"
+              name={Members[2]?.name}
+              numberofcards={Members[2]?.numberofcards}
+            />
           </div>
           <div>
             <NowCardComponent NowCard={nowcard} />
