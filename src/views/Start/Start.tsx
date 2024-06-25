@@ -25,15 +25,16 @@ const { data } = supabase.storage
   /*const { happyface } = supabase.storage
   .from("avatars/image")
   .getPublicUrl("happy.png");
+const imageUrl = happyface.publicUrl;
 
 const { cryface } = supabase.storage
   .from("avatars/image")
   .getPublicUrl("cry.png");
 
-const { data } = supabase.storage
+const { niyariface } = supabase.storage
   .from("avatars/image")
   .getPublicUrl("niyari.png");
-*/
+  */
 }
 
 type MyCard = {
@@ -61,8 +62,8 @@ const Start = () => {
 
   const images = [
     { id: 1, src: ".../../src/assets/happy.png" },
-    { id: 2, src: data.publicUrl },
-    { id: 3, src: data.publicUrl },
+    { id: 2, src: ".../../src/assets/cry.png" },
+    { id: 3, src: ".../../src/assets/niyari.png" },
   ];
   const [selectedImageId, setSelectedImageId] = useState<number | null>(null);
 

@@ -3,7 +3,7 @@ import Button from "../../components/Button";
 import { useNavigate } from "react-router-dom";
 import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
-import { supabase } from "../../utils/supabase";
+//import { supabase } from "../../utils/supabase";
 
 const Success = () => {
   const { width, height } = useWindowSize();
@@ -13,9 +13,9 @@ const Success = () => {
     navigate("/");
   };
 
-  const { data } = supabase.storage
-    .from("avatars/image")
-    .getPublicUrl("fuwafuwa.jpg");
+  // const { data } = supabase.storage
+  // .from("avatars/image")
+  //.getPublicUrl("fuwafuwa.jpg");
 
   return (
     <Layout>
@@ -30,7 +30,9 @@ const Success = () => {
         numberOfPieces={150}
       />
 
-      <div className="flex flex-col items-center justify-center h-screen w-screen bg-[url({data.publicUrl})]">
+      {/*bg-[url({data.publicUrl})]*/}
+
+      <div className="flex flex-col items-center justify-center h-screen w-screen bg-[url(../src/assets/fuwafuwa.jpg)]">
         <p
           className="text-6xl
         font-extrabold
