@@ -87,7 +87,7 @@ const Start = () => {
     GetUserCards();
     GetMyCards();
     GetUserName();
-    // console.log("Members:", Members);
+    console.log("Members:", Members);
   }, []);
 
   //残りのカードが0なったら成功画面に遷移
