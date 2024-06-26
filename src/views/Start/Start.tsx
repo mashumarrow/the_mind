@@ -31,6 +31,7 @@ type User = {
 };
 
 type Member = {
+  UserID: number;
   name: string;
   numberofcards: number;
 };
@@ -43,7 +44,7 @@ const Start = () => {
   const [Members, setMembers] = useState<Member[]>([]); //メンバーの名前とカードの枚数
   const [remainingCards, setRemainingCards] = useState<number>(8); //チームの残りのカード
   const [myName, setMyName] = useState<string>(""); //自分の名前
-  const [possiblityOfSuccess, setpossiblityOfSuccess] = useState<boolean | null>(null); //成功できるかどうか
+  const [possibilityOfSuccess, setPossibilityOfSuccess] = useState<boolean | null>(null); //成功できるかどうか
   const navigate = useNavigate();
 
   const images = [
@@ -53,19 +54,15 @@ const Start = () => {
   ];
   const [selectedImageId, setSelectedImageId] = useState<number | null>(null);
 
-  //console.log(id);
-
   //手札取得してくる
   useEffect(() => {
     const GetMyCards = async () => {
       const res: any = await GetUserCard(UserID);
-      //console.log(res[0]);
       setMyCards({ hand1: res[0].hand1, hand2: res[0].hand2 });
     };
 
     const GetUserName = async () => {
       const res: any = await GetUserNameonRoom(id);
-
       const myname = res.find((item: User) => item.UserID === UserID);
       setMyName(myname.name); //自分の名前を取得
     };
@@ -76,57 +73,50 @@ const Start = () => {
         .filter((item: User) => item.UserID !== UserID)
         .map((item: User) => {
           const numberOfCards = [item.hand1, item.hand2].filter((card) => card !== null).length;
-          return { name: item.name, numberofcards: numberOfCards };
+          return { UserID: item.UserID, name: item.name, numberofcards: numberOfCards };
         });
 
       setMembers(members); // メンバーの名前と手札の枚数を格納
-
-      // console.log("res", res);
     };
 
-    GetUserCards();
     GetMyCards();
     GetUserName();
-    console.log("Members:", Members);
-  }, []);
+    GetUserCards();
+  }, [UserID, id]);
 
   //残りのカードが0なったら成功画面に遷移
   useEffect(() => {
     if (remainingCards === 0) {
       navigate(`/room/${id}/success`);
     }
-  }, [remainingCards]);
+  }, [remainingCards, navigate, id]);
 
-  //カードを出して3秒後に成功する可能性がまだあるかないかを判定する　＊3秒後ではないと、データベースの検知を他のユーザができないため　＊この間にスピナー回すなどして、要工夫
+  //カードを出して3秒後に成功する可能性がまだあるかないかを判定する
   useEffect(() => {
     const UpdateRoom = async () => {
-      await UpdateSuccess(id, possiblityOfSuccess);
+      await UpdateSuccess(id, possibilityOfSuccess);
     };
     const timer = setTimeout(() => {
       UpdateRoom();
     }, 3000);
     return () => clearTimeout(timer);
-  }, [possiblityOfSuccess]);
+  }, [possibilityOfSuccess, id]);
 
-  //リアルタイムでゲーム状況を取得するやつです、本当はhooks.tsに書くやつです、ごめんなさい。
-  //他の人がカードを出す、失敗をリアルタイムで検知しています。
+  //リアルタイムでゲーム状況を取得するやつです
   supabase
     .channel("rooms")
     .on(
       "postgres_changes",
       { event: "UPDATE", schema: "public", table: "rooms" },
       async (payload) => {
-        console.log(payload.new);
         if (payload.new.success === false) {
-          console.log("ゲームに失敗しました。");
           navigate(`/room/${id}/failure`);
         } else if (payload.new.now_card !== nowcard) {
-          console.log("メンバーがカードを出しました。", payload.new.now_card);
           const res = await CompareCards(payload.new.now_card, MyCards);
-          console.log(res);
-          setpossiblityOfSuccess(res);
-          setRemainingCards(remainingCards - 1);
+          setPossibilityOfSuccess(res);
+          setRemainingCards((prev) => prev - 1);
           setNowCard(payload.new.now_card);
+          updateMemberCards(payload.new.user_id); // 追加: nowcardを出したユーザーのカード枚数を更新
         }
       }
     )
@@ -135,28 +125,32 @@ const Start = () => {
   //手札出す
   const hand1 = async () => {
     await ChangeNowCard(id, MyCards.hand1);
-    MyCards.hand1 = null;
+    setMyCards((prev) => ({ ...prev, hand1: null }));
+    updateMemberCards(UserID);
   };
 
-  //手札出す
   const hand2 = async () => {
     await ChangeNowCard(id, MyCards.hand2);
-    MyCards.hand2 = null;
+    setMyCards((prev) => ({ ...prev, hand2: null }));
+    updateMemberCards(UserID);
   };
 
-  //スタンプ選ぶ
+  const updateMemberCards = (userID: number) => {
+    setMembers((prevMembers) =>
+      prevMembers.map((member) =>
+        member.UserID === userID ? { ...member, numberofcards: member.numberofcards - 1 } : member
+      )
+    );
+  };
 
   // 画像がクリックされたとき
   const handleImageClick = async (imageId: number) => {
     try {
-      // Supabaseに画像IDを保存
       const { data, error } = await supabase.from("users").insert([{ stamp: imageId }]);
 
       if (error) {
         console.error("エラー", error);
       } else {
-        console.log("Data inserted:", data);
-        // 画像IDを状態に設定して、選択された画像を表示
         setSelectedImageId(imageId);
       }
     } catch (error) {
@@ -202,8 +196,8 @@ const Start = () => {
             <NowCardComponent NowCard={nowcard} />
           </div>
           <div className="flex justify-center w-full mt-10 space-x-10">
-            <MyCardComponent MyCard={MyCards.hand1} />
-            <MyCardComponent MyCard={MyCards.hand2} />
+            <MyCardComponent MyCard={MyCards.hand1} onClick={hand1} />
+            <MyCardComponent MyCard={MyCards.hand2} onClick={hand2} />
           </div>
           <div className="relative flex space-x-4 -mt-4">
             {images.map(
