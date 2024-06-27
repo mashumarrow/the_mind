@@ -17,6 +17,29 @@ import { PlayerCardComponent } from "./components/PlayerCard";
 import { NowCardComponent } from "./components/NowCard";
 import { MyCardComponent } from "./components/MyCard";
 
+{
+  /*const fetchImargeUrl1 = () => {
+  const { data } = supabase.storage
+    .from("avatars/image")
+    .getPublicUrl("happy.png");
+
+  const { data } = supabase.storage
+    .from("avatars/image")
+    .getPublicUrl("cry.png");
+
+  const { data } = supabase.storage
+    .from("avatars/image")
+    .getPublicUrl("niyari.png");
+
+  return `${data.publicUrl}`;
+};
+*/
+}
+
+const { data } = supabase.storage
+  .from("avatars/image")
+  .getPublicUrl("player.jpg");
+
 type MyCard = {
   hand1: number | null;
   hand2: number | null;
@@ -47,9 +70,9 @@ const Start = () => {
   const navigate = useNavigate();
 
   const images = [
-    { id: 1, src: "../../src/assets/happy.png" },
-    { id: 2, src: "../../src/assets/cry.png" },
-    { id: 3, src: "../../src/assets/niyari.png" },
+    { id: 1, src: ".../../src/assets/happy.png" },
+    { id: 2, src: ".../../src/assets/cry.png" },
+    { id: 3, src: ".../../src/assets/niyari.png" },
   ];
 
   //console.log(id);
@@ -226,8 +249,8 @@ const Start = () => {
             </button>
           )}
 
-          <p className="text-green-500">{myName}</p>
-          <p className="text-green-500">{membersName}</p>
+
+        
         </div>
 
         <Layout>
@@ -266,6 +289,7 @@ const Start = () => {
                 .filter((member) => member.UserID !== UserID)
                 .slice(0, 3)
                 .map((member) => (
+
                   <img
                     key={member.UserID}
                     src={images.find((img) => img.id === member.stamp)?.src}

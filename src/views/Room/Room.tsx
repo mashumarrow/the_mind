@@ -45,6 +45,10 @@ const Room = () => {
     )
     .subscribe();
 
+  const { data } = supabase.storage
+    .from("avatars/image")
+    .getPublicUrl("deal_thecards.png");
+
   return (
     <div>
       <div className="flex flex-col items-center h-screen w-screen bg-amber-50 gap-10 ">
@@ -73,7 +77,7 @@ const Room = () => {
         </div>
         <img
           className="object-contain animate-wobble-ver-right"
-          src="../src/assets/deal_the_cards.png"
+          src={data.publicUrl}
           width={180}
           height={180}
         />
