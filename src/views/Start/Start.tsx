@@ -17,28 +17,21 @@ import { PlayerCardComponent } from "./components/PlayerCard";
 import { NowCardComponent } from "./components/NowCard";
 import { MyCardComponent } from "./components/MyCard";
 
-{
-  /*const fetchImargeUrl1 = () => {
-  const { data } = supabase.storage
-    .from("avatars/image")
-    .getPublicUrl("happy.png");
-
-  const { data } = supabase.storage
-    .from("avatars/image")
-    .getPublicUrl("cry.png");
-
-  const { data } = supabase.storage
-    .from("avatars/image")
-    .getPublicUrl("niyari.png");
-
-  return `${data.publicUrl}`;
-};
-*/
-}
-
 const { data } = supabase.storage
   .from("avatars/image")
   .getPublicUrl("player.jpg");
+
+const { data: player1 } = supabase.storage
+  .from("avatars/image")
+  .getPublicUrl("happy.png");
+
+const { data: player2 } = supabase.storage
+  .from("avatars/image")
+  .getPublicUrl("cry.png");
+
+const { data: player3 } = supabase.storage
+  .from("avatars/image")
+  .getPublicUrl("niyari.png");
 
 type MyCard = {
   hand1: number | null;
@@ -64,10 +57,11 @@ const Start = () => {
   const navigate = useNavigate();
 
   const images = [
-    { id: 1, src: ".../../src/assets/happy.png" },
-    { id: 2, src: ".../../src/assets/cry.png" },
-    { id: 3, src: ".../../src/assets/niyari.png" },
+    { id: 1, src: player1.publicUrl },
+    { id: 2, src: player2.publicUrl },
+    { id: 3, src: player3.publicUrl },
   ];
+
   const [selectedImageId, setSelectedImageId] = useState<number | null>(null);
 
   //console.log(id);
@@ -173,7 +167,7 @@ const Start = () => {
 
   return (
     <>
-      <div className="flex flex-col">
+      {/* <div className="flex flex-col">
         {MyCards.hand1 !== null && (
           <button className="text-red-500" onClick={hand1}>
             {MyCards.hand1}
@@ -187,7 +181,9 @@ const Start = () => {
 
         <p className="text-green-500">{myName}</p>
         <p className="text-green-500">{membersName}</p>
+        
       </div>
+      */}
 
       <Layout>
         <div className="flex flex-col items-center  h-screen w-screen bg-amber-50 gap-10">
@@ -210,7 +206,7 @@ const Start = () => {
                   <img
                     key={image.id}
                     src={image.src}
-                    className=" w-32 h-auto cursor-pointer object-contain max-w-ful"
+                    className=" w-28 h-auto cursor-pointer object-contain max-w-ful"
                     onClick={() => handleImageClick(image.id)}
                   />
                 )
