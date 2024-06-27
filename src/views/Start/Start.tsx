@@ -4,7 +4,7 @@ import {
   ChangeNowCard,
   CompareCards,
   GetUserCard,
-  GetUserNameonRoom,
+  //GetUserNameonRoom,
   UpdateSuccess,
 } from "./hooks";
 import { supabase } from "../..//utils/supabase";
@@ -36,19 +36,23 @@ import { MyCardComponent } from "./components/MyCard";
 */
 }
 
-const { data } = supabase.storage
+{
+  /*const { data } = supabase.storage
   .from("avatars/image")
   .getPublicUrl("player.jpg");
-
+*/
+}
 type MyCard = {
   hand1: number | null;
   hand2: number | null;
 };
 
-type User = {
+{
+  /*type User = {
   UserID: number;
   name: string;
-};
+};*/
+}
 
 const Start = () => {
   const [UserID] = useContext(UserIdContext);
@@ -56,8 +60,8 @@ const Start = () => {
   const [nowcard, setNowCard] = useState<number | null>(null); //場のカード
   const [MyCards, setMyCards] = useState<MyCard>({ hand1: null, hand2: null }); //手札
   const [remainingCards, setRemainingCards] = useState<number>(8); //チームの残りのカード
-  const [myName, setMyName] = useState<string>(""); //自分の名前
-  const [membersName, setMembersName] = useState<string[]>([]); //メンバーの名前
+  //const [myName, setMyName] = useState<string>(""); //自分の名前
+  //const [membersName, setMembersName] = useState<string[]>([]); //メンバーの名前
   const [possiblityOfSuccess, setpossiblityOfSuccess] = useState<
     boolean | null
   >(null); //成功できるかどうか
@@ -85,14 +89,17 @@ const Start = () => {
       setMyCards({ hand1: res[0].hand1, hand2: res[0].hand2 });
     };
     const GetUserName = async () => {
-      const res: any = await GetUserNameonRoom(id);
+      //const res: any = await GetUserNameonRoom(id);
       //console.log("res", res);
-      const myname = res.find((item: User) => item.UserID === UserID);
+      {
+        /*const myname = res.find((item: User) => item.UserID === UserID);
       setMyName(myname.name); //自分の名前を取得
       const membersName = res
         .filter((item: User) => item.UserID !== UserID)
         .map((item: { name: string }) => item.name);
       setMembersName(membersName); //メンバーの名前を取得
+      */
+      }
     };
 
     //console.log(UserID);
@@ -248,9 +255,6 @@ const Start = () => {
               {MyCards.hand2}
             </button>
           )}
-
-
-        
         </div>
 
         <Layout>
@@ -289,7 +293,6 @@ const Start = () => {
                 .filter((member) => member.UserID !== UserID)
                 .slice(0, 3)
                 .map((member) => (
-
                   <img
                     key={member.UserID}
                     src={images.find((img) => img.id === member.stamp)?.src}
