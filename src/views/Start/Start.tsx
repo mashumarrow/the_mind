@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { UserIdContext } from "../../Context";
 import {
-  ChangeNowCard,
+  //ChangeNowCard,
   CompareCards,
   GetUserCard,
   //GetUserNameonRoom,
@@ -18,30 +18,24 @@ import { NowCardComponent } from "./components/NowCard";
 import { MyCardComponent } from "./components/MyCard";
 
 {
-  /*const fetchImargeUrl1 = () => {
-  const { data } = supabase.storage
-    .from("avatars/image")
-    .getPublicUrl("happy.png");
-
-  const { data } = supabase.storage
-    .from("avatars/image")
-    .getPublicUrl("cry.png");
-
-  const { data } = supabase.storage
-    .from("avatars/image")
-    .getPublicUrl("niyari.png");
-
-  return `${data.publicUrl}`;
-};
-*/
-}
-
-{
   /*const { data } = supabase.storage
   .from("avatars/image")
-  .getPublicUrl("player.jpg");
-*/
+  .getPublicUrl("player.jpg");*/
 }
+
+const { data: player1 } = supabase.storage
+  .from("avatars/image")
+  .getPublicUrl("happy.png");
+
+const { data: player2 } = supabase.storage
+  .from("avatars/image")
+  .getPublicUrl("cry.png");
+
+const { data: player3 } = supabase.storage
+  .from("avatars/image")
+  .getPublicUrl("niyari.png");
+
+
 type MyCard = {
   hand1: number | null;
   hand2: number | null;
@@ -74,12 +68,17 @@ const Start = () => {
   const navigate = useNavigate();
 
   const images = [
-    { id: 1, src: ".../../src/assets/happy.png" },
-    { id: 2, src: ".../../src/assets/cry.png" },
-    { id: 3, src: ".../../src/assets/niyari.png" },
+    { id: 1, src: player1.publicUrl },
+    { id: 2, src: player2.publicUrl },
+    { id: 3, src: player3.publicUrl },
   ];
 
+  //const [selectedImageId, setSelectedImageId] = useState<number | null>(null);
+
   //console.log(id);
+  console.log(myName);
+  console.log(membersName);
+  console.log(memberStamps);
 
   //手札取得してくる
   useEffect(() => {
@@ -150,7 +149,8 @@ const Start = () => {
     .subscribe();
 
   //手札出す
-  const hand1 = async () => {
+  {
+    /*const hand1 = async () => {
     await ChangeNowCard(id, MyCards.hand1);
     MyCards.hand1 = null;
   };
@@ -159,7 +159,8 @@ const Start = () => {
   const hand2 = async () => {
     await ChangeNowCard(id, MyCards.hand2);
     MyCards.hand2 = null;
-  };
+  };*/
+  }
 
   //スタンプ選ぶ
 
@@ -244,18 +245,7 @@ const Start = () => {
               />
             ))}
         </div>
-        <div className="flex flex-col">
-          {MyCards.hand1 !== null && (
-            <button className="text-red-500" onClick={hand1}>
-              {MyCards.hand1}
-            </button>
-          )}
-          {MyCards.hand2 !== null && (
-            <button className="text-blue-500" onClick={hand2}>
-              {MyCards.hand2}
-            </button>
-          )}
-        </div>
+
 
         <Layout>
           <div className="flex flex-col items-center  h-screen w-screen bg-amber-50 gap-6">
@@ -288,19 +278,22 @@ const Start = () => {
                 />
               ))}
             </div>
-            <div className="absolute top-10 flex flex-row ">
+            {/*<div className="absolute top-10 flex flex-row ">
               {memberStamps
                 .filter((member) => member.UserID !== UserID)
                 .slice(0, 3)
                 .map((member) => (
                   <img
                     key={member.UserID}
+                    src={member.stamp}
+                    className=" w-28 h-auto cursor-pointer object-contain max-w-ful"
+                    onClick={() => handleImageClick(member.UserID)}
                     src={images.find((img) => img.id === member.stamp)?.src}
                     //alt={` ${member.UserID}`}
                     className="w-20 h-auto object-contain max-w-full m-3.5"
                   />
                 ))}
-            </div>
+            </div>*/}
           </div>
         </Layout>
       </div>
