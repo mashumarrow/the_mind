@@ -35,7 +35,6 @@ const { data: player3 } = supabase.storage
   .from("avatars/image")
   .getPublicUrl("niyari.png");
 
-
 type MyCard = {
   hand1: number | null;
   hand2: number | null;
@@ -76,8 +75,7 @@ const Start = () => {
   //const [selectedImageId, setSelectedImageId] = useState<number | null>(null);
 
   //console.log(id);
-  console.log(myName);
-  console.log(membersName);
+
   console.log(memberStamps);
 
   //手札取得してくる
@@ -245,7 +243,6 @@ const Start = () => {
               />
             ))}
         </div>
-
 
         <Layout>
           <div className="flex flex-col items-center  h-screen w-screen bg-amber-50 gap-6">
