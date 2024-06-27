@@ -54,6 +54,12 @@ const Start = () => {
   const [possiblityOfSuccess, setpossiblityOfSuccess] = useState<
     boolean | null
   >(null); //成功できるかどうか
+  const [stamp, setStamp] = useState<number | null>(null); //選択された画像のID
+  const [memberStamps, setMemberStamps] = useState<
+    { UserID: number; stamp: number }[]
+  >([]); //他のメンバーのスタンプ
+  const [stampSelected, setStampSelected] = useState<boolean>(false); // スタンプが選択されたかどうか
+
   const navigate = useNavigate();
 
   const images = [
@@ -63,6 +69,7 @@ const Start = () => {
   ];
 
   const [selectedImageId, setSelectedImageId] = useState<number | null>(null);
+
 
   //console.log(id);
 
@@ -147,73 +154,155 @@ const Start = () => {
 
   // 画像がクリックされたとき
   const handleImageClick = async (imageId: number) => {
+    if (stampSelected) return; // スタンプがすでに選択されている場合は処理を中断
     try {
-      // Supabaseに画像IDを保存
       const { data, error } = await supabase
         .from("users")
-        .insert([{ stamp: imageId }]);
+        .update({ stamp: imageId })
+        .eq("UserID", UserID)
+        .eq("RoomID", id);
 
       if (error) {
-        console.error("エラー", error);
+        console.error(`ユーザのアップデートエラー`, error);
       } else {
-        console.log("Data inserted:", data);
-        // 画像IDを状態に設定して、選択された画像を表示
-        setSelectedImageId(imageId);
+        console.log(`ユーザーのデータが更新されました`, data);
+        setStamp(imageId);
+        setStampSelected(true); // スタンプが選択されたと設定
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error", error);
     }
   };
 
+  useEffect(() => {
+    const subscription = supabase
+      .channel("users")
+      .on(
+        "postgres_changes",
+        { event: "UPDATE", schema: "public", table: "users" },
+        (payload) => {
+          if (payload.new.RoomID === id) {
+            setMemberStamps((prev) => [
+              ...prev.filter((item) => item.UserID !== payload.new.UserID),
+              { UserID: payload.new.UserID, stamp: payload.new.stamp },
+            ]);
+            if (payload.new.UserID === UserID) {
+              setStamp(payload.new.stamp);
+              setStampSelected(true); // リロード時に選択済みの状態を反映
+            }
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(subscription);
+    };
+  }, [id, UserID]);
+
+  useEffect(() => {
+    const fetchMemberStamps = async () => {
+      const { data, error } = await supabase
+        .from("users")
+        .select("UserID, stamp")
+        .eq("RoomID", id)
+        .neq("UserID", UserID);
+
+      if (error) {
+        console.error("Error ", error);
+      } else {
+        setMemberStamps(data);
+      }
+    };
+
+    fetchMemberStamps();
+  }, [id, UserID]);
+
   return (
     <>
-      {/* <div className="flex flex-col">
-        {MyCards.hand1 !== null && (
-          <button className="text-red-500" onClick={hand1}>
-            {MyCards.hand1}
-          </button>
-        )}
-        {MyCards.hand2 !== null && (
-          <button className="text-blue-500" onClick={hand2}>
-            {MyCards.hand2}
-          </button>
-        )}
+     
+      <div className="flex flex-row h-screen">
+        <div className="flex flex-col items-start justify-start w-full">
+          {!stampSelected &&
+            images.map((image) => (
+              <img
+                key={image.id}
+                src={image.src}
+                className={`w-32 h-auto cursor-pointer object-contain`}
+                onClick={() => handleImageClick(image.id)}
+                alt={`Image ${image.id}`}
+              />
+            ))}
+        </div>
+        <div className="flex flex-col">
+          {MyCards.hand1 !== null && (
+            <button className="text-red-500" onClick={hand1}>
+              {MyCards.hand1}
+            </button>
+          )}
+          {MyCards.hand2 !== null && (
+            <button className="text-blue-500" onClick={hand2}>
+              {MyCards.hand2}
+            </button>
+          )}
 
-        <p className="text-green-500">{myName}</p>
-        <p className="text-green-500">{membersName}</p>
+
         
-      </div>
-      */}
+        </div>
 
-      <Layout>
-        <div className="flex flex-col items-center  h-screen w-screen bg-amber-50 gap-10">
-          <div className="flex justify-center w-full mt-10 space-x-4">
-            <PlayerCardComponent imagePath={data.publicUrl} />
-            <PlayerCardComponent imagePath={data.publicUrl} />
-            <PlayerCardComponent imagePath={data.publicUrl} />
-          </div>
-          <div>
-            <NowCardComponent NowCard={nowcard} />
-          </div>
-          <div className="flex justify-center w-full mt-10 space-x-10">
-            <MyCardComponent MyCard={MyCards.hand1} />
-            <MyCardComponent MyCard={MyCards.hand2} />
-          </div>
-          <div className="relative flex space-x-4 -mt-4">
-            {images.map(
-              (image) =>
-                (selectedImageId === null || selectedImageId === image.id) && (
+        <Layout>
+          <div className="flex flex-col items-center  h-screen w-screen bg-amber-50 gap-6">
+            <div className="flex justify-center w-full mt-10 space-x-4">
+              <PlayerCardComponent imagePath="../../src/assets/player1.svg" />
+              <PlayerCardComponent imagePath="../../src/assets/player2.svg" />
+              <PlayerCardComponent imagePath="../../src/assets/player3.svg" />
+            </div>
+            <div>
+              <NowCardComponent NowCard={nowcard} />
+            </div>
+            <div className="flex justify-center w-full mt-10 space-x-10">
+              <MyCardComponent MyCard={MyCards.hand1} />
+              <MyCardComponent MyCard={MyCards.hand2} />
+            </div>
+            {stamp === null && (
+              <div className="border-2 border-dashed border-white bg-pink-50 shadow-[0_0_0_2px_#f8edeb] p-2 m-3">
+                リアクションスタンプを押してね
+              </div>
+            )}
+            <div className="relative flex space-x-4 -mt-4">
+              {images.map((image) => (
+                <img
+                  key={image.id}
+                  src={image.src}
+                  className={`w-24 h-auto cursor-pointer object-contain max-w-full ${
+                    stamp === null || stamp === image.id ? "block" : "hidden"
+                  }`}
+                  onClick={() => handleImageClick(image.id)}
+                />
+              ))}
+            </div>
+            <div className="absolute top-10 flex flex-row ">
+              {memberStamps
+                .filter((member) => member.UserID !== UserID)
+                .slice(0, 3)
+                .map((member) => (
+
+
                   <img
                     key={image.id}
                     src={image.src}
                     className=" w-28 h-auto cursor-pointer object-contain max-w-ful"
                     onClick={() => handleImageClick(image.id)}
+                    key={member.UserID}
+                    src={images.find((img) => img.id === member.stamp)?.src}
+                    //alt={` ${member.UserID}`}
+                    className="w-20 h-auto object-contain max-w-full m-3.5"
                   />
-                )
-            )}
+                ))}
+            </div>
           </div>
-        </div>
-      </Layout>
+        </Layout>
+      </div>
     </>
   );
 };
