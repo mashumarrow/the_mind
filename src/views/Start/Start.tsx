@@ -112,6 +112,7 @@ const Start = () => {
       "postgres_changes",
       { event: "UPDATE", schema: "public", table: "rooms" },
       async (payload) => {
+        if (payload.new.RoomID !== id) return;
         if (payload.new.success === false) {
           navigate(`/room/${id}/failure`);
         } else if (payload.new.now_card !== nowcard) {
@@ -129,12 +130,14 @@ const Start = () => {
   const hand1 = async () => {
     await ChangeNowCard(id, MyCards.hand1);
     setNowCard(MyCards.hand1);
+    setRemainingCards(remainingCards - 1);
     setMyCards((prev) => ({ ...prev, hand1: null }));
   };
 
   const hand2 = async () => {
     await ChangeNowCard(id, MyCards.hand2);
     setNowCard(MyCards.hand2);
+    setRemainingCards(remainingCards - 1);
     setMyCards((prev) => ({ ...prev, hand2: null }));
   };
 
@@ -191,7 +194,10 @@ const Start = () => {
             ))}
           </div>
           <div>
-            <NowCardComponent NowCard={nowcard} />
+            <NowCardComponent
+              NowCard={nowcard}
+              reminingCards={remainingCards}
+            />
           </div>
           <div className="flex justify-center w-full mt-10 space-x-10">
             {MyCards.hand1 && (

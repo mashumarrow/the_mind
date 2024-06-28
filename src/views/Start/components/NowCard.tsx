@@ -2,16 +2,16 @@ import { Box, Card, CardContent, Typography } from "@mui/material";
 
 type NowCardComponentProps = {
   NowCard: number | null;
+  reminingCards: number;
 };
 
 export const NowCardComponent: React.FC<NowCardComponentProps> = ({
   NowCard,
+  reminingCards,
 }) => {
-  if (NowCard === null) {
-    return <p>まだ誰も出していません。</p>;
-  } else {
-    return (
-      <>
+  return (
+    <>
+      {NowCard && (
         <Box
           sx={{
             position: "relative",
@@ -22,9 +22,6 @@ export const NowCardComponent: React.FC<NowCardComponentProps> = ({
             alignItems: "center",
             justifyContent: "center",
           }}
-          //onTouchStart={handleTouchStart}
-          //onTouchMove={handleTouchMove}
-          //onTouchEnd={handleTouchEnd}
         >
           <Box
             sx={{
@@ -69,7 +66,10 @@ export const NowCardComponent: React.FC<NowCardComponentProps> = ({
             </CardContent>
           </Card>
         </Box>
-      </>
-    );
-  }
+      )}
+      <p className="text-center pt-2 text-xl font-semibold text-slate-500">
+        残り{reminingCards}枚!
+      </p>
+    </>
+  );
 };
