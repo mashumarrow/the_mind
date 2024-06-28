@@ -3,10 +3,10 @@ import { Card, CardContent, CardMedia, Typography, Box } from "@mui/material";
 
 type MyCardComponentProps = {
   MyCard: number | null;
-  onClick: () => void;
+  //onClick: () => void;
 };
 
-export const MyCardComponent: React.FC<MyCardComponentProps> = ({ MyCard, onClick }) => {
+export const MyCardComponent: React.FC<MyCardComponentProps> = ({ MyCard }) => {
   const handleTouchStart = (e: React.TouchEvent) => {
     // Optional: handle touch start if necessary
   };
@@ -33,7 +33,7 @@ export const MyCardComponent: React.FC<MyCardComponentProps> = ({ MyCard, onClic
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
-      onClick={onClick}
+      //onClick={onClick}
     >
       <Card
         sx={{
@@ -62,7 +62,10 @@ export const MyCardComponent: React.FC<MyCardComponentProps> = ({ MyCard, onClic
             textAlign: "center",
           }}
         >
-          <Typography variant="h3" sx={{ fontSize: "44px", fontWeight: "bold", lineHeight: 1 }}>
+          <Typography
+            variant="h3"
+            sx={{ fontSize: "44px", fontWeight: "bold", lineHeight: 1 }}
+          >
             {MyCard}
           </Typography>
         </CardContent>

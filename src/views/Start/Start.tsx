@@ -37,7 +37,6 @@ const { data: player3 } = supabase.storage
   .from("avatars/image")
   .getPublicUrl("niyari.png");
 
-
 type MyCard = {
   hand1: number | null;
   hand2: number | null;
@@ -85,8 +84,7 @@ const Start = () => {
   //const [selectedImageId, setSelectedImageId] = useState<number | null>(null);
 
   //console.log(id);
-  console.log(myName);
-  console.log(membersName);
+
   console.log(memberStamps);
 
   //手札取得してくる
@@ -116,7 +114,6 @@ const Start = () => {
 
     GetMyCards();
     GetUserName();
-    GetUserCards();
   }, [UserID, id]);
 
   //残りのカードが0なったら成功画面に遷移
@@ -129,13 +126,13 @@ const Start = () => {
   //カードを出して3秒後に成功する可能性がまだあるかないかを判定する
   useEffect(() => {
     const UpdateRoom = async () => {
-      await UpdateSuccess(id, possibilityOfSuccess);
+      await UpdateSuccess(id, possiblityOfSuccess);
     };
     const timer = setTimeout(() => {
       UpdateRoom();
     }, 3000);
     return () => clearTimeout(timer);
-  }, [possibilityOfSuccess, id]);
+  }, [possiblityOfSuccess, id]);
 
   //リアルタイムでゲーム状況を取得するやつです
   supabase
@@ -148,10 +145,10 @@ const Start = () => {
           navigate(`/room/${id}/failure`);
         } else if (payload.new.now_card !== nowcard) {
           const res = await CompareCards(payload.new.now_card, MyCards);
-          setPossibilityOfSuccess(res);
+          setpossiblityOfSuccess(res);
           setRemainingCards((prev) => prev - 1);
           setNowCard(payload.new.now_card);
-          updateMemberCards(payload.new.user_id); // 追加: nowcardを出したユーザーのカード枚数を更新
+          setpossiblityOfSuccess(payload.new.user_id); // 追加: nowcardを出したユーザーのカード枚数を更新
         }
       }
     )
@@ -173,107 +170,103 @@ const Start = () => {
   };
     
   };*/
-  
 
-  const updateMemberCards = (userID: number) => {
-    setMembers((prevMembers) =>
-      prevMembers.map((member) =>
-        member.UserID === userID ? { ...member, numberofcards: member.numberofcards - 1 } : member
-      )
-    );
-  };
+    const updateMemberCards = (userID: number) => {
+      setMembers((prevMembers) =>
+        prevMembers.map((member) =>
+          member.UserID === userID
+            ? { ...member, numberofcards: member.numberofcards - 1 }
+            : member
+        )
+      );
+    };
 
-  // 画像がクリックされたとき
-  const handleImageClick = async (imageId: number) => {
-    if (stampSelected) return; // スタンプがすでに選択されている場合は処理を中断
-    try {
+    // 画像がクリックされたとき
+    const handleImageClick = async (imageId: number) => {
+      if (stampSelected) return; // スタンプがすでに選択されている場合は処理を中断
+      try {
+        const { data, error } = await supabase
+          .from("users")
+          .update({ stamp: imageId })
+          .eq("UserID", UserID)
+          .eq("RoomID", id);
 
-      const { data, error } = await supabase
-        .from("users")
-        .update({ stamp: imageId })
-        .eq("UserID", UserID)
-        .eq("RoomID", id);
-
-      if (error) {
-        console.error(`ユーザのアップデートエラー`, error);
-      } else {
-        console.log(`ユーザーのデータが更新されました`, data);
-        setStamp(imageId);
-        setStampSelected(true); // スタンプが選択されたと設定
+        if (error) {
+          console.error(`ユーザのアップデートエラー`, error);
+        } else {
+          console.log(`ユーザーのデータが更新されました`, data);
+          setStamp(imageId);
+          setStampSelected(true); // スタンプが選択されたと設定
+        }
+      } catch (error) {
+        console.error("Error", error);
       }
-    } catch (error) {
-      console.error("Error", error);
-    }
-  };
+    };
 
-  useEffect(() => {
-    const subscription = supabase
-      .channel("users")
-      .on(
-        "postgres_changes",
-        { event: "UPDATE", schema: "public", table: "users" },
-        (payload) => {
-          if (payload.new.RoomID === id) {
-            setMemberStamps((prev) => [
-              ...prev.filter((item) => item.UserID !== payload.new.UserID),
-              { UserID: payload.new.UserID, stamp: payload.new.stamp },
-            ]);
-            if (payload.new.UserID === UserID) {
-              setStamp(payload.new.stamp);
-              setStampSelected(true); // リロード時に選択済みの状態を反映
+    useEffect(() => {
+      const subscription = supabase
+        .channel("users")
+        .on(
+          "postgres_changes",
+          { event: "UPDATE", schema: "public", table: "users" },
+          (payload) => {
+            if (payload.new.RoomID === id) {
+              setMemberStamps((prev) => [
+                ...prev.filter((item) => item.UserID !== payload.new.UserID),
+                { UserID: payload.new.UserID, stamp: payload.new.stamp },
+              ]);
+              if (payload.new.UserID === UserID) {
+                setStamp(payload.new.stamp);
+                setStampSelected(true); // リロード時に選択済みの状態を反映
+              }
             }
           }
+        )
+        .subscribe();
+
+      return () => {
+        supabase.removeChannel(subscription);
+      };
+    }, [id, UserID]);
+
+    useEffect(() => {
+      const fetchMemberStamps = async () => {
+        const { data, error } = await supabase
+          .from("users")
+          .select("UserID, stamp")
+          .eq("RoomID", id)
+          .neq("UserID", UserID);
+
+        if (error) {
+          console.error("Error ", error);
+        } else {
+          setMemberStamps(data);
         }
-      )
-      .subscribe();
+      };
 
-    return () => {
-      supabase.removeChannel(subscription);
-    };
-  }, [id, UserID]);
+      fetchMemberStamps();
+    }, [id, UserID]);
 
-  useEffect(() => {
-    const fetchMemberStamps = async () => {
-      const { data, error } = await supabase
-        .from("users")
-        .select("UserID, stamp")
-        .eq("RoomID", id)
-        .neq("UserID", UserID);
-
-      if (error) {
-        console.error("Error ", error);
-      } else {
-        setMemberStamps(data);
-      }
-    };
-
-    fetchMemberStamps();
-  }, [id, UserID]);
-
-  return (
-    <>
-      
-
-      
-
+    return (
+      <>
         <Layout>
           <div className="flex flex-col items-center  h-screen w-screen bg-amber-50 gap-6">
             <div className="flex justify-center w-full mt-10 space-x-4">
-               <PlayerCardComponent
-              imagePath="../../src/assets/player1.svg"
-              name={Members[0]?.name}
-              numberofcards={Members[0]?.numberofcards}
-            />
-            <PlayerCardComponent
-              imagePath="../../src/assets/player2.svg"
-              name={Members[1]?.name}
-              numberofcards={Members[1]?.numberofcards}
-            />
-            <PlayerCardComponent
-              imagePath="../../src/assets/player3.svg"
-              name={Members[2]?.name}
-              numberofcards={Members[2]?.numberofcards}
-            />
+              <PlayerCardComponent
+                imagePath="../../src/assets/player1.svg"
+                name={Members[0]?.name}
+                numberofcards={Members[0]?.numberofcards}
+              />
+              <PlayerCardComponent
+                imagePath="../../src/assets/player2.svg"
+                name={Members[1]?.name}
+                numberofcards={Members[1]?.numberofcards}
+              />
+              <PlayerCardComponent
+                imagePath="../../src/assets/player3.svg"
+                name={Members[2]?.name}
+                numberofcards={Members[2]?.numberofcards}
+              />
             </div>
             <div>
               <NowCardComponent NowCard={nowcard} />
@@ -317,9 +310,9 @@ const Start = () => {
             </div>*/}
           </div>
         </Layout>
-      </div>
-    </>
-  );
+      </>
+    );
+  }
 };
 
 export default Start;
