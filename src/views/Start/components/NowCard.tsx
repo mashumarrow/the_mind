@@ -67,7 +67,7 @@ export const NowCardComponent: React.FC<NowCardComponentProps> = ({
           </Card>
         </Box>
       )}
-      <p className="text-center pt-2 text-xl font-semibold text-slate-500">
+      <p className="text-center pt-1 text-xl font-semibold text-slate-500">
         残り{reminingCards}枚!
       </p>
     </>
