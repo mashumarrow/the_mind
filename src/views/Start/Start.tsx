@@ -176,22 +176,25 @@ const Start = () => {
       <Layout>
         <div className="flex flex-col items-center  h-screen w-screen bg-amber-50 gap-6">
           <div
+            className="bg-pink-50"
             style={{
               fontSize: "1em",
-
               padding: "10px",
               borderRadius: "10px",
               display: "inline-block",
-              backgroundColor: "#fff1f2",
               textAlign: "center",
               width: "100%",
               boxSizing: "border-box",
             }}
           >
-            <span className="font-semibold text-lg ">残りスタンプ回数</span>
-            <br />
-            <span className="text-red-500 text-2xl font-semibold">
+            <span className="font-semibold text-lg ">残りスタンプ回数：</span>
+            <span className="text-sky-300 text-xl font-semibold">
               {stampCount}
+            </span>
+            <br />
+            <span className="font-semibold text-lg"> 残り枚数：</span>
+            <span className="text-red-400 text-xl font-semibold">
+              {remainingCards}
             </span>
           </div>
           <div className="flex justify-center w-full mt-2 space-x-4">
