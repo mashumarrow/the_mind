@@ -3,11 +3,15 @@ import { Card, CardContent, CardMedia, Typography, Box } from "@mui/material";
 
 type MyCardComponentProps = {
   MyCard: number | null;
-  //onClick: () => void;
+  onClick: () => void;
 };
 
-export const MyCardComponent: React.FC<MyCardComponentProps> = ({ MyCard }) => {
-  const handleTouchStart = (e: React.TouchEvent) => {
+export const MyCardComponent: React.FC<MyCardComponentProps> = ({
+  MyCard,
+  onClick,
+}) => {
+  {
+    /*const handleTouchStart = (e: React.TouchEvent) => {
     // Optional: handle touch start if necessary
   };
 
@@ -17,7 +21,8 @@ export const MyCardComponent: React.FC<MyCardComponentProps> = ({ MyCard }) => {
 
   const handleTouchEnd = () => {
     // Optional: handle touch end if necessary
-  };
+  };*/
+  }
 
   return (
     <Box
@@ -30,10 +35,10 @@ export const MyCardComponent: React.FC<MyCardComponentProps> = ({ MyCard }) => {
         alignItems: "center",
         justifyContent: "center",
       }}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-      //onClick={onClick}
+      //onTouchStart={handleTouchStart}
+      //onTouchMove={handleTouchMove}
+      //onTouchEnd={handleTouchEnd}
+      onClick={onClick}
     >
       <Card
         sx={{
