@@ -75,19 +75,6 @@ export const MyCardComponent: React.FC<MyCardComponentProps> = ({
           </Typography>
         </CardContent>
       </Card>
-      <Box
-        sx={{
-          position: "absolute",
-          top: "-40%",
-          width: "100%",
-          color: "red",
-          fontSize: "40px",
-          animation: "up-down 1s infinite alternate",
-          textAlign: "center",
-        }}
-      >
-        ⇧
-      </Box>
     </Box>
   );
 };
