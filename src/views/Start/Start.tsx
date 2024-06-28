@@ -57,6 +57,7 @@ const Start = () => {
   const [stamp, setStamp] = useState<number | null>(null); //選択された画像のID
 
   const [stampSelected, setStampSelected] = useState<boolean>(false); // スタンプが選択されたかどうか
+  const [seconds, setSeconds] = useState(120);
 
   const navigate = useNavigate();
 
@@ -65,6 +66,18 @@ const Start = () => {
     { id: 2, src: player2.publicUrl },
     { id: 3, src: player3.publicUrl },
   ];
+
+  useEffect(() => {
+    if (seconds === 0) {
+      navigate(`/room/${id}/failure`);
+    }
+
+    const interval = setInterval(() => {
+      setSeconds((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [seconds]);
 
   //手札取得してくる
   useEffect(() => {
@@ -94,14 +107,14 @@ const Start = () => {
     }
   }, [remainingCards]);
 
-  //カードを出して3秒後に成功する可能性がまだあるかないかを判定する
+  //カードを出して1.5秒後に成功する可能性がまだあるかないかを判定する
   useEffect(() => {
     const UpdateRoom = async () => {
       await UpdateSuccess(id, possiblityOfSuccess);
     };
     const timer = setTimeout(() => {
       UpdateRoom();
-    }, 3000);
+    }, 1500);
     return () => clearTimeout(timer);
   }, [possiblityOfSuccess, id]);
 
@@ -198,6 +211,7 @@ const Start = () => {
               NowCard={nowcard}
               reminingCards={remainingCards}
             />
+            {seconds} //残り時間
           </div>
           <div className="flex justify-center w-full mt-10 space-x-10">
             {MyCards.hand1 && (
