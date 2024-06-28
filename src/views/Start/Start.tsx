@@ -194,8 +194,12 @@ const Start = () => {
             <NowCardComponent NowCard={nowcard} />
           </div>
           <div className="flex justify-center w-full mt-10 space-x-10">
-            <MyCardComponent MyCard={MyCards.hand1} onClick={hand1} />
-            <MyCardComponent MyCard={MyCards.hand2} onClick={hand2} />
+            {MyCards.hand1 && (
+              <MyCardComponent MyCard={MyCards.hand1} onClick={hand1} />
+            )}
+            {MyCards.hand2 && (
+              <MyCardComponent MyCard={MyCards.hand2} onClick={hand2} />
+            )}
           </div>
           {stamp === null && (
             <div className="border-2 border-dashed border-white bg-pink-50 shadow-[0_0_0_2px_#f8edeb] p-2 m-3">

@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardContent, CardMedia, Typography, Box } from "@mui/material";
+import { Card, CardContent, Typography, Box } from "@mui/material";
 
 type MyCardComponentProps = {
   MyCard: number | null;
@@ -40,18 +40,25 @@ export const MyCardComponent: React.FC<MyCardComponentProps> = ({
       //onTouchEnd={handleTouchEnd}
       onClick={onClick}
     >
+      <Box
+        sx={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: "70%",
+          height: "55%",
+          borderRadius: "50%",
+          backgroundColor: "#F1CAFD", // 薄い紫色
+          zIndex: 0, // カードの背後に配置するため
+        }}
+      />
       <Card
         sx={{
           width: "100%",
           height: "100%",
         }}
       >
-        <CardMedia
-          component="img"
-          image="../../src/assets/hand1.svg"
-          sx={{ width: "100%", height: "100%", objectFit: "contain" }}
-          title="Player Image"
-        />
         <CardContent
           sx={{
             position: "absolute",

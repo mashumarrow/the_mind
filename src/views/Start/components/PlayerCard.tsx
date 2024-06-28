@@ -1,6 +1,10 @@
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { supabase } from "../../../utils/supabase";
 
+const { data: syoki } = supabase.storage
+  .from("avatars/image")
+  .getPublicUrl("cat.png");
+
 const { data: player1 } = supabase.storage
   .from("avatars/image")
   .getPublicUrl("happy.png");
@@ -30,16 +34,37 @@ export const PlayerCardComponent: React.FC<PlayerCardComponentProps> = ({
 
   return (
     <Card sx={{ width: 91, height: 153, border: "1px solid black" }}>
-      <CardMedia
-        component="img"
-        sx={{ width: 67, height: 79, objectFit: "contain", mx: "auto", my: 2 }}
-        image={images.find((img) => img.id === stampPath)?.src}
-        title="Player Image"
-      />
+      {stampPath ? (
+        <CardMedia
+          component="img"
+          sx={{
+            width: 67,
+            height: 79,
+            objectFit: "contain",
+            mx: "auto",
+            my: 2,
+          }}
+          image={images.find((img) => img.id === stampPath)?.src}
+          title="Player Image"
+        />
+      ) : (
+        <CardMedia
+          component="img"
+          sx={{
+            width: 67,
+            height: 79,
+            objectFit: "contain",
+            mx: "auto",
+            my: 2,
+          }}
+          image={syoki.publicUrl}
+          title="Player Image"
+        />
+      )}
       <CardContent sx={{ marginTop: -4 }}>
         <Typography
           gutterBottom
-          sx={{ textAlign: "center", fontSize: "16px", fontWeight: "bold" }}
+          sx={{ textAlign: "center", fontSize: "14px", fontWeight: "bold" }}
           component="div"
           className="pt-5"
         >
