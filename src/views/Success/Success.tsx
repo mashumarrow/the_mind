@@ -8,8 +8,8 @@ import { supabase } from "../../utils/supabase";
 const Success = () => {
   const { width, height } = useWindowSize();
   const navigate = useNavigate();
+
   const handleClick = () => {
-    console.log("ボタンがクリックされました");
     navigate("/");
   };
 
