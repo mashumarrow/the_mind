@@ -281,22 +281,19 @@ const Start = () => {
               />
             ))}
           </div>
-          {/*<div className="absolute top-10 flex flex-row ">
-              {memberStamps
-                .filter((member) => member.UserID !== UserID)
-                .slice(0, 3)
-                .map((member) => (
-                  <img
-                    key={member.UserID}
-                    src={member.stamp}
-                    className=" w-28 h-auto cursor-pointer object-contain max-w-ful"
-                    onClick={() => handleImageClick(member.UserID)}
-                    src={images.find((img) => img.id === member.stamp)?.src}
-                    //alt={` ${member.UserID}`}
-                    className="w-20 h-auto object-contain max-w-full m-3.5"
-                  />
-                ))}
-            </div>*/}
+          <div className="absolute top-10 flex flex-row ">
+            {memberStamps
+              .filter((member) => member.UserID !== UserID)
+              .slice(0, 3)
+              .map((member) => (
+                <img
+                  key={member.UserID}
+                  src={images.find((img) => img.id === member.stamp)?.src}
+                  //alt={` ${member.UserID}`}
+                  className="w-20 h-auto object-contain max-w-full m-3.5"
+                />
+              ))}
+          </div>
         </div>
       </Layout>
     </>
