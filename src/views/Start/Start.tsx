@@ -74,6 +74,7 @@ const Start = () => {
     { id: 3, src: player3.publicUrl },
   ];
 
+
   //手札取得してくる
   useEffect(() => {
     const GetMyCards = async () => {
@@ -284,6 +285,7 @@ const Start = () => {
               .filter((member) => member.UserID !== UserID)
               .slice(0, 3)
               .map((member) => (
+
                 <img
                   key={member.UserID}
                   src={images.find((img) => img.id === member.stamp)?.src}
