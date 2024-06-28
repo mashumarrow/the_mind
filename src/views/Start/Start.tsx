@@ -74,8 +74,6 @@ const Start = () => {
     { id: 3, src: player3.publicUrl },
   ];
 
-  console.log(memberStamps);
-
   //手札取得してくる
   useEffect(() => {
     const GetMyCards = async () => {
