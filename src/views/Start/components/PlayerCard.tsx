@@ -1,32 +1,51 @@
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
+import { supabase } from "../../../utils/supabase";
+
+const { data: player1 } = supabase.storage
+  .from("avatars/image")
+  .getPublicUrl("happy.png");
+
+const { data: player2 } = supabase.storage
+  .from("avatars/image")
+  .getPublicUrl("cry.png");
+
+const { data: player3 } = supabase.storage
+  .from("avatars/image")
+  .getPublicUrl("niyari.png");
 
 type PlayerCardComponentProps = {
-  imagePath: string;
+  stampPath: number;
   name: string;
-  numberofcards: number;
 };
 
 export const PlayerCardComponent: React.FC<PlayerCardComponentProps> = ({
-  imagePath,
+  stampPath,
   name,
-  numberofcards,
-}) => (
-  <Card sx={{ width: 91, height: 153, border: "1px solid black" }}>
-    <CardMedia
-      component="img"
-      sx={{ width: 67, height: 79, objectFit: "contain", mx: "auto", my: 2 }}
-      image={imagePath}
-      title="Player Image"
-    />
-    <CardContent sx={{ marginTop: -4 }}>
-      <Typography
-        gutterBottom
-        sx={{ textAlign: "center", fontSize: "16px", fontWeight: "bold" }}
-        component="div"
-      >
-        {name}
-      </Typography>
-      <Typography sx={{ fontSize: "11px", fontWeight: "bold" }}>残り：{numberofcards}枚</Typography>
-    </CardContent>
-  </Card>
-);
+}) => {
+  const images = [
+    { id: 1, src: player1.publicUrl },
+    { id: 2, src: player2.publicUrl },
+    { id: 3, src: player3.publicUrl },
+  ];
+
+  return (
+    <Card sx={{ width: 91, height: 153, border: "1px solid black" }}>
+      <CardMedia
+        component="img"
+        sx={{ width: 67, height: 79, objectFit: "contain", mx: "auto", my: 2 }}
+        image={images.find((img) => img.id === stampPath)?.src}
+        title="Player Image"
+      />
+      <CardContent sx={{ marginTop: -4 }}>
+        <Typography
+          gutterBottom
+          sx={{ textAlign: "center", fontSize: "16px", fontWeight: "bold" }}
+          component="div"
+          className="pt-5"
+        >
+          {name}
+        </Typography>
+      </CardContent>
+    </Card>
+  );
+};

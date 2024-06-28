@@ -62,11 +62,11 @@ export const UpdateSuccess = async (
   }
 };
 
-export const GetUserNameonRoom = async (RoomID: string) => {
+export const GetNameandStamponRoom = async (RoomID: string) => {
 
   const { data, error } = await supabase
     .from("users")
-    .select("UserID, name")
+    .select("UserID, name, stamp")
     .eq("RoomID", RoomID);
   if (data) {
     console.log(`${RoomID}のユーザー名を取得`, data);
