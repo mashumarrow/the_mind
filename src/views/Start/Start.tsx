@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { UserIdContext } from "../../Context";
+import { TimeLeftContext, UserIdContext } from "../../Context";
 import {
   ChangeNowCard,
   CompareCards,
@@ -13,12 +13,6 @@ import Layout from "../../Layout";
 import { PlayerCardComponent } from "./components/PlayerCard";
 import { NowCardComponent } from "./components/NowCard";
 import { MyCardComponent } from "./components/MyCard";
-
-{
-  /*const { data } = supabase.storage
-  .from("avatars/image")
-  .getPublicUrl("player.jpg");*/
-}
 
 const { data: player1 } = supabase.storage
   .from("avatars/image")
@@ -46,11 +40,11 @@ type Member = {
 const Start = () => {
   const [UserID] = useContext(UserIdContext);
   const { id }: any = useParams();
+  const [, setTimeLeft] = useContext(TimeLeftContext);
   const [nowcard, setNowCard] = useState<number | null>(null); //場のカード
   const [MyCards, setMyCards] = useState<MyCard>({ hand1: null, hand2: null }); //手札
   const [Members, setMembers] = useState<Member[]>([]); //メンバーの名前とカードの枚数
-  const [remainingCards, setRemainingCards] = useState<number>(8); //チームの残りのカード
-  //const [membersName, setMembersName] = useState<string[]>([]); //メンバーの名前
+  const [remainingCards, setRemainingCards] = useState<number>(8); //チームの残りのカードの枚数
   const [possiblityOfSuccess, setpossiblityOfSuccess] = useState<
     boolean | null
   >(null); //成功できるかどうか
@@ -102,7 +96,8 @@ const Start = () => {
   useEffect(() => {
     console.log(remainingCards);
     if (remainingCards === 0) {
-      console.log("成功");
+      setTimeLeft(seconds);
+      //console.log("成功");
       navigate(`/room/${id}/success`);
     }
   }, [remainingCards]);
