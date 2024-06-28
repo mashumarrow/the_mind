@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { TimeLeftContext, UserIdContext } from "../../Context";
+import { UserIdContext } from "../../Context";
 import {
   ChangeNowCard,
   CompareCards,
@@ -40,7 +40,6 @@ type Member = {
 const Start = () => {
   const [UserID] = useContext(UserIdContext);
   const { id }: any = useParams();
-  const [, setTimeLeft] = useContext(TimeLeftContext);
   const [nowcard, setNowCard] = useState<number | null>(null); //場のカード
   const [MyCards, setMyCards] = useState<MyCard>({ hand1: null, hand2: null }); //手札
   const [Members, setMembers] = useState<Member[]>([]); //メンバーの名前とカードの枚数
@@ -51,7 +50,6 @@ const Start = () => {
   const [stamp, setStamp] = useState<number | null>(null); //選択された画像のID
 
   const [stampSelected, setStampSelected] = useState<boolean>(false); // スタンプが選択されたかどうか
-  const [seconds, setSeconds] = useState(120);
 
   const navigate = useNavigate();
 
@@ -60,18 +58,6 @@ const Start = () => {
     { id: 2, src: player2.publicUrl },
     { id: 3, src: player3.publicUrl },
   ];
-
-  useEffect(() => {
-    if (seconds === 0) {
-      navigate(`/room/${id}/failure`);
-    }
-
-    const interval = setInterval(() => {
-      setSeconds((prev) => prev - 1);
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [seconds]);
 
   //手札取得してくる
   useEffect(() => {
@@ -96,7 +82,6 @@ const Start = () => {
   useEffect(() => {
     console.log(remainingCards);
     if (remainingCards === 0) {
-      setTimeLeft(seconds);
       //console.log("成功");
       navigate(`/room/${id}/success`);
     }
@@ -192,7 +177,7 @@ const Start = () => {
     <>
       <Layout>
         <div className="flex flex-col items-center  h-screen w-screen bg-amber-50 gap-6">
-          <div
+          {/*<div
             style={{
               fontSize: "1em",
 
@@ -207,7 +192,7 @@ const Start = () => {
           >
             残り時間 <br />
             {seconds}
-          </div>
+          </div>*/}
           <div className="flex justify-center w-full mt-2 space-x-4">
             {Members.map((member) => (
               <PlayerCardComponent
@@ -234,7 +219,7 @@ const Start = () => {
           </div>
 
           {stamp === null && (
-            <div className="border-2 border border-white bg-pink-50 shadow-[0_0_0_2px_#f8edeb] p-1 m-3 ">
+            <div className="border-2  border-white bg-pink-50 shadow-[0_0_0_2px_#f8edeb] p-1 m-3 ">
               リアクションスタンプを押してね
             </div>
           )}

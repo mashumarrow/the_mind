@@ -1,19 +1,13 @@
 import Layout from "../../Layout";
 import Button from "../../components/Button";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
 import { supabase } from "../../utils/supabase";
-import { useContext, useEffect } from "react";
-import { PostTime } from "./hooks";
-import { TimeLeftContext, UserIdContext } from "../../Context";
 
 const Success = () => {
   const { width, height } = useWindowSize();
   const navigate = useNavigate();
-  const { id }: any = useParams();
-  const [timeLeft] = useContext(TimeLeftContext);
-  const [UserID] = useContext(UserIdContext);
 
   const handleClick = () => {
     navigate("/");
@@ -22,13 +16,6 @@ const Success = () => {
   const { data } = supabase.storage
     .from("avatars/image")
     .getPublicUrl("fuwafuwa.jpg");
-
-  useEffect(() => {
-    const PostingTime = async () => {
-      await PostTime(timeLeft, id, UserID);
-    };
-    PostingTime();
-  }, []);
 
   return (
     <Layout>
