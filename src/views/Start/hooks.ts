@@ -2,7 +2,11 @@ import { supabase } from "../../utils/supabase";
 
 // この関数は、指定されたユーザーの手札を取得します。
 export const GetUserCard = async (UserID: number) => {
-  const { data, error } = await supabase.from("users").select("hand1, hand2").eq("UserID", UserID);
+
+  const { data, error } = await supabase
+    .from("users")
+    .select("hand1, hand2")
+    .eq("UserID", UserID);
   if (data) {
     console.log("手札取得できた", data);
     return data;
@@ -28,7 +32,11 @@ export const ChangeNowCard = async (id: string, card: number | null) => {
 // この関数は、指定されたカードを比較し、成功か失敗を判定します。
 export const CompareCards = async (nowcard: any, { hand1, hand2 }: any) => {
   console.log(hand1, hand2, nowcard);
-  if ((hand1 !== null && hand1 < nowcard) || (hand2 !== null && hand2 < nowcard)) {
+
+  if (
+    (hand1 !== null && hand1 < nowcard) ||
+    (hand2 !== null && hand2 < nowcard)
+  ) {
     console.log("場のカードが手札より大きいのでゲーム失敗です。");
     return false;
   }
@@ -37,7 +45,11 @@ export const CompareCards = async (nowcard: any, { hand1, hand2 }: any) => {
 };
 
 // この関数は、ゲームが失敗したときに、指定された部屋の成功フラグをfalseに更新します。
-export const UpdateSuccess = async (RoomID: string, posiblity: boolean | null) => {
+
+export const UpdateSuccess = async (
+  RoomID: string,
+  posiblity: boolean | null
+) => {
   if (posiblity === null) return console.log("成功可能性がnullです。");
   const { error } = await supabase
     .from("rooms")
@@ -51,7 +63,11 @@ export const UpdateSuccess = async (RoomID: string, posiblity: boolean | null) =
 };
 
 export const GetUserNameonRoom = async (RoomID: string) => {
-  const { data, error } = await supabase.from("users").select("UserID, name").eq("RoomID", RoomID);
+
+  const { data, error } = await supabase
+    .from("users")
+    .select("UserID, name")
+    .eq("RoomID", RoomID);
   if (data) {
     console.log(`${RoomID}のユーザー名を取得`, data);
     return data;
