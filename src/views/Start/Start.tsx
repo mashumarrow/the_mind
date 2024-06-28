@@ -176,10 +176,10 @@ const Start = () => {
       <Layout>
         <div className="flex flex-col items-center  h-screen w-screen bg-amber-50 gap-6">
           <div
-            className="bg-pink-50"
+            className="bg-pink-50 py-1"
             style={{
               fontSize: "1em",
-              padding: "10px",
+
               borderRadius: "10px",
               display: "inline-block",
               textAlign: "center",
@@ -187,13 +187,13 @@ const Start = () => {
               boxSizing: "border-box",
             }}
           >
-            <span className="font-semibold text-lg ">残りスタンプ回数：</span>
-            <span className="text-sky-300 text-xl font-semibold">
+            <span className="font-semibold text-sm ">残りスタンプ回数：</span>
+            <span className="text-sky-300 text-lg font-semibold">
               {stampCount}
             </span>
             <br />
-            <span className="font-semibold text-lg"> 残り枚数：</span>
-            <span className="text-red-400 text-xl font-semibold">
+            <span className="font-semibold text-sm"> 残り枚数：</span>
+            <span className="text-red-400 text-lg font-semibold">
               {remainingCards}
             </span>
           </div>
@@ -231,7 +231,7 @@ const Start = () => {
 
           {stampCount !== 0 && (
             <>
-              <div className="border-2  border-white bg-pink-50 shadow-[0_0_0_2px_#f8edeb] p-1  ">
+              <div className="border-2  border-white bg-pink-50 shadow-[0_0_0_2px_#f8edeb]  ">
                 {stamp ? (
                   <>変えるときはもう一度押してね</>
                 ) : (
@@ -243,7 +243,7 @@ const Start = () => {
                   <img
                     key={image.id}
                     src={image.src}
-                    className={`w-24 h-auto cursor-pointer object-contain max-w-full ${
+                    className={`w-16 h-auto cursor-pointer object-contain max-w-full ${
                       stamp !== image.id ? "block" : "hidden"
                     }`}
                     onClick={() => handleImageClick(image.id)}
