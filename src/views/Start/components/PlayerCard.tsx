@@ -2,10 +2,14 @@ import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 
 type PlayerCardComponentProps = {
   imagePath: string;
+  name: string;
+  numberofcards: number;
 };
 
 export const PlayerCardComponent: React.FC<PlayerCardComponentProps> = ({
   imagePath,
+  name,
+  numberofcards,
 }) => (
   <Card sx={{ width: 91, height: 153, border: "1px solid black" }}>
     <CardMedia
@@ -17,14 +21,12 @@ export const PlayerCardComponent: React.FC<PlayerCardComponentProps> = ({
     <CardContent sx={{ marginTop: -4 }}>
       <Typography
         gutterBottom
-        sx={{ fontSize: "16px", fontWeight: "bold" }}
+        sx={{ textAlign: "center", fontSize: "16px", fontWeight: "bold" }}
         component="div"
       >
-        Player
+        {name}
       </Typography>
-      <Typography sx={{ fontSize: "11px", fontWeight: "bold" }}>
-        残り：１枚
-      </Typography>
+      <Typography sx={{ fontSize: "11px", fontWeight: "bold" }}>残り：{numberofcards}枚</Typography>
     </CardContent>
   </Card>
 );

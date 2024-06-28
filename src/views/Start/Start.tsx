@@ -4,6 +4,8 @@ import {
   //ChangeNowCard,
   CompareCards,
   GetUserCard,
+  GetUserNameonRoom,
+  GetUserNumberofCards,
   //GetUserNameonRoom,
   UpdateSuccess,
 } from "./hooks";
@@ -45,14 +47,21 @@ type MyCard = {
   /*type User = {
   UserID: number;
   name: string;
-};*/
+  }*/
 }
+
+type Member = {
+  UserID: number;
+  name: string;
+  numberofcards: number;
+};
 
 const Start = () => {
   const [UserID] = useContext(UserIdContext);
   const { id }: any = useParams();
   const [nowcard, setNowCard] = useState<number | null>(null); //場のカード
   const [MyCards, setMyCards] = useState<MyCard>({ hand1: null, hand2: null }); //手札
+  const [Members, setMembers] = useState<Member[]>([]); //メンバーの名前とカードの枚数
   const [remainingCards, setRemainingCards] = useState<number>(8); //チームの残りのカード
   //const [myName, setMyName] = useState<string>(""); //自分の名前
   //const [membersName, setMembersName] = useState<string[]>([]); //メンバーの名前
@@ -84,65 +93,65 @@ const Start = () => {
   useEffect(() => {
     const GetMyCards = async () => {
       const res: any = await GetUserCard(UserID);
-      //console.log(res[0]);
       setMyCards({ hand1: res[0].hand1, hand2: res[0].hand2 });
     };
+
     const GetUserName = async () => {
       //const res: any = await GetUserNameonRoom(id);
       //console.log("res", res);
       {
         /*const myname = res.find((item: User) => item.UserID === UserID);
       setMyName(myname.name); //自分の名前を取得
-      const membersName = res
+    };
+
+    const GetUserCards = async () => {
+      const res: any = await GetUserNumberofCards(id);
+      const members = res
         .filter((item: User) => item.UserID !== UserID)
-        .map((item: { name: string }) => item.name);
+      {/*  .map((item: { name: string }) => item.name);
       setMembersName(membersName); //メンバーの名前を取得
       */
       }
     };
 
-    //console.log(UserID);
     GetMyCards();
     GetUserName();
-  }, []);
+    GetUserCards();
+  }, [UserID, id]);
 
   //残りのカードが0なったら成功画面に遷移
   useEffect(() => {
     if (remainingCards === 0) {
       navigate(`/room/${id}/success`);
     }
-  }, [remainingCards]);
+  }, [remainingCards, navigate, id]);
 
-  //カードを出して3秒後に成功する可能性がまだあるかないかを判定する　＊3秒後ではないと、データベースの検知を他のユーザができないため　＊この間にスピナー回すなどして、要工夫
+  //カードを出して3秒後に成功する可能性がまだあるかないかを判定する
   useEffect(() => {
     const UpdateRoom = async () => {
-      await UpdateSuccess(id, possiblityOfSuccess);
+      await UpdateSuccess(id, possibilityOfSuccess);
     };
     const timer = setTimeout(() => {
       UpdateRoom();
     }, 3000);
     return () => clearTimeout(timer);
-  }, [possiblityOfSuccess]);
+  }, [possibilityOfSuccess, id]);
 
-  //リアルタイムでゲーム状況を取得するやつです、本当はhooks.tsに書くやつです、ごめんなさい。
-  //他の人がカードを出す、失敗をリアルタイムで検知しています。
+  //リアルタイムでゲーム状況を取得するやつです
   supabase
     .channel("rooms")
     .on(
       "postgres_changes",
       { event: "UPDATE", schema: "public", table: "rooms" },
       async (payload) => {
-        console.log(payload.new);
         if (payload.new.success === false) {
-          console.log("ゲームに失敗しました。");
           navigate(`/room/${id}/failure`);
         } else if (payload.new.now_card !== nowcard) {
-          console.log("メンバーがカードを出しました。", payload.new.now_card);
           const res = await CompareCards(payload.new.now_card, MyCards);
-          console.log(res);
-          setpossiblityOfSuccess(res);
-          setRemainingCards(remainingCards - 1);
+          setPossibilityOfSuccess(res);
+          setRemainingCards((prev) => prev - 1);
           setNowCard(payload.new.now_card);
+          updateMemberCards(payload.new.user_id); // 追加: nowcardを出したユーザーのカード枚数を更新
         }
       }
     )
@@ -152,22 +161,33 @@ const Start = () => {
   {
     /*const hand1 = async () => {
     await ChangeNowCard(id, MyCards.hand1);
-    MyCards.hand1 = null;
+    setMyCards((prev) => ({ ...prev, hand1: null }));
+    updateMemberCards(UserID);
   };
 
-  //手札出す
   const hand2 = async () => {
     await ChangeNowCard(id, MyCards.hand2);
-    MyCards.hand2 = null;
-  };*/
-  }
 
-  //スタンプ選ぶ
+    setMyCards((prev) => ({ ...prev, hand2: null }));
+    updateMemberCards(UserID);
+  };
+    
+  };*/
+  
+
+  const updateMemberCards = (userID: number) => {
+    setMembers((prevMembers) =>
+      prevMembers.map((member) =>
+        member.UserID === userID ? { ...member, numberofcards: member.numberofcards - 1 } : member
+      )
+    );
+  };
 
   // 画像がクリックされたとき
   const handleImageClick = async (imageId: number) => {
     if (stampSelected) return; // スタンプがすでに選択されている場合は処理を中断
     try {
+
       const { data, error } = await supabase
         .from("users")
         .update({ stamp: imageId })
@@ -232,27 +252,28 @@ const Start = () => {
 
   return (
     <>
-      <div className="flex flex-row h-screen">
-        <div className="flex flex-col items-start justify-start w-full">
-          {!stampSelected &&
-            images.map((image) => (
-              <img
-                key={image.id}
-                src={image.src}
-                className={`w-32 h-auto cursor-pointer object-contain`}
-                onClick={() => handleImageClick(image.id)}
-                alt={`Image ${image.id}`}
-              />
-            ))}
-        </div>
+      
 
+      
 
         <Layout>
           <div className="flex flex-col items-center  h-screen w-screen bg-amber-50 gap-6">
             <div className="flex justify-center w-full mt-10 space-x-4">
-              <PlayerCardComponent imagePath="../../src/assets/player1.svg" />
-              <PlayerCardComponent imagePath="../../src/assets/player2.svg" />
-              <PlayerCardComponent imagePath="../../src/assets/player3.svg" />
+               <PlayerCardComponent
+              imagePath="../../src/assets/player1.svg"
+              name={Members[0]?.name}
+              numberofcards={Members[0]?.numberofcards}
+            />
+            <PlayerCardComponent
+              imagePath="../../src/assets/player2.svg"
+              name={Members[1]?.name}
+              numberofcards={Members[1]?.numberofcards}
+            />
+            <PlayerCardComponent
+              imagePath="../../src/assets/player3.svg"
+              name={Members[2]?.name}
+              numberofcards={Members[2]?.numberofcards}
+            />
             </div>
             <div>
               <NowCardComponent NowCard={nowcard} />
