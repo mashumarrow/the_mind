@@ -58,7 +58,7 @@ const Waiting = () => {
   return (
     <div>
       <div className="flex flex-col items-center h-screen w-screen bg-amber-50 gap-10 ">
-        <div className="  text-2xl  mt-[130px] mb-10">ローディング中</div>
+        <div className="  text-2xl  mt-[130px] mb-10">人をまっています</div>
         <div className="flex items-center justify-center mt-[-20px]">
           <svg
             className="animate-spin h-10 w-10 text-black-500"
