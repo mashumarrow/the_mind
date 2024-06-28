@@ -197,7 +197,23 @@ const Start = () => {
     <>
       <Layout>
         <div className="flex flex-col items-center  h-screen w-screen bg-amber-50 gap-6">
-          <div className="flex justify-center w-full mt-10 space-x-4">
+          <div
+            style={{
+              fontSize: "1em",
+
+              padding: "10px",
+              borderRadius: "10px",
+              display: "inline-block",
+              backgroundColor: "#fff1f2",
+              textAlign: "center",
+              width: "100%",
+              boxSizing: "border-box",
+            }}
+          >
+            残り時間 <br />
+            {seconds}
+          </div>
+          <div className="flex justify-center w-full mt-2 space-x-4">
             {Members.map((member) => (
               <PlayerCardComponent
                 key={member.UserID}
@@ -211,9 +227,9 @@ const Start = () => {
               NowCard={nowcard}
               reminingCards={remainingCards}
             />
-            {seconds} //残り時間
           </div>
-          <div className="flex justify-center w-full mt-10 space-x-10">
+
+          <div className="flex justify-center w-full mt-1 space-x-10">
             {MyCards.hand1 && (
               <MyCardComponent MyCard={MyCards.hand1} onClick={hand1} />
             )}
@@ -221,8 +237,9 @@ const Start = () => {
               <MyCardComponent MyCard={MyCards.hand2} onClick={hand2} />
             )}
           </div>
+
           {stamp === null && (
-            <div className="border-2 border-dashed border-white bg-pink-50 shadow-[0_0_0_2px_#f8edeb] p-2 m-3">
+            <div className="border-2 border border-white bg-pink-50 shadow-[0_0_0_2px_#f8edeb] p-1 m-3 ">
               リアクションスタンプを押してね
             </div>
           )}
