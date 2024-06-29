@@ -10,26 +10,12 @@ export const MyCardComponent: React.FC<MyCardComponentProps> = ({
   MyCard,
   onClick,
 }) => {
-  {
-    /*const handleTouchStart = (e: React.TouchEvent) => {
-    // Optional: handle touch start if necessary
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    // Optional: handle touch move if necessary
-  };
-
-  const handleTouchEnd = () => {
-    // Optional: handle touch end if necessary
-  };*/
-  }
-
   return (
     <Box
       sx={{
         position: "relative",
-        width: 110,
-        height: 146,
+        width: 50,
+        height: 70,
         cursor: "pointer",
         display: "flex",
         alignItems: "center",
@@ -46,8 +32,8 @@ export const MyCardComponent: React.FC<MyCardComponentProps> = ({
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: "70%",
-          height: "55%",
+          width: "60%",
+          height: "45%",
           borderRadius: "50%",
           backgroundColor: "#F1CAFD", // 薄い紫色
           zIndex: 0, // カードの背後に配置するため

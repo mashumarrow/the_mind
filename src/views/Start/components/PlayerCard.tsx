@@ -33,13 +33,13 @@ export const PlayerCardComponent: React.FC<PlayerCardComponentProps> = ({
   ];
 
   return (
-    <Card sx={{ width: 91, height: 153, border: "1px solid black" }}>
+    <Card sx={{ width: 75, height: 135, border: "1px solid black" }}>
       {stampPath ? (
         <CardMedia
           component="img"
           sx={{
-            width: 67,
-            height: 79,
+            width: 65,
+            height: 80,
             objectFit: "contain",
             mx: "auto",
             my: 2,
@@ -51,8 +51,8 @@ export const PlayerCardComponent: React.FC<PlayerCardComponentProps> = ({
         <CardMedia
           component="img"
           sx={{
-            width: 67,
-            height: 79,
+            width: 65,
+            height: 80,
             objectFit: "contain",
             mx: "auto",
             my: 2,
@@ -64,9 +64,8 @@ export const PlayerCardComponent: React.FC<PlayerCardComponentProps> = ({
       <CardContent sx={{ marginTop: -4 }}>
         <Typography
           gutterBottom
-          sx={{ textAlign: "center", fontSize: "14px", fontWeight: "bold" }}
+          sx={{ textAlign: "center", fontSize: "12px", fontWeight: "bold" }}
           component="div"
-          className="pt-5"
         >
           {name}
         </Typography>

@@ -44,12 +44,11 @@ const Start = () => {
   const [MyCards, setMyCards] = useState<MyCard>({ hand1: null, hand2: null }); //手札
   const [Members, setMembers] = useState<Member[]>([]); //メンバーの名前とカードの枚数
   const [remainingCards, setRemainingCards] = useState<number>(8); //チームの残りのカードの枚数
+  const [stampCount, setStampCount] = useState<number>(5); //スタンプの残り回数
   const [possiblityOfSuccess, setpossiblityOfSuccess] = useState<
     boolean | null
   >(null); //成功できるかどうか
   const [stamp, setStamp] = useState<number | null>(null); //選択された画像のID
-
-  const [stampSelected, setStampSelected] = useState<boolean>(false); // スタンプが選択されたかどうか
 
   const navigate = useNavigate();
 
@@ -136,8 +135,6 @@ const Start = () => {
 
   // 画像がクリックされたとき
   const handleImageClick = async (imageId: number) => {
-    if (stampSelected) return; // スタンプがすでに選択されている場合は処理を中断
-
     const { data, error } = await supabase
       .from("users")
       .update({ stamp: imageId })
@@ -149,8 +146,8 @@ const Start = () => {
     } else {
       console.log(`ユーザーのデータが更新されました`, data);
       setStamp(imageId);
-      setStampSelected(true); // スタンプが選択されたと設定
     }
+    setStampCount(stampCount - 1);
   };
 
   supabase
@@ -168,6 +165,7 @@ const Start = () => {
                 : item
             )
           );
+          setStampCount(stampCount - 1);
         }
       }
     )
@@ -177,22 +175,28 @@ const Start = () => {
     <>
       <Layout>
         <div className="flex flex-col items-center  h-screen w-screen bg-amber-50 gap-6">
-          {/*<div
+          <div
+            className="bg-pink-50 py-1"
             style={{
               fontSize: "1em",
 
-              padding: "10px",
               borderRadius: "10px",
               display: "inline-block",
-              backgroundColor: "#fff1f2",
               textAlign: "center",
               width: "100%",
               boxSizing: "border-box",
             }}
           >
-            残り時間 <br />
-            {seconds}
-          </div>*/}
+            <span className="font-semibold text-sm ">残りスタンプ回数：</span>
+            <span className="text-sky-300 text-lg font-semibold">
+              {stampCount}
+            </span>
+            <br />
+            <span className="font-semibold text-sm"> 残り枚数：</span>
+            <span className="text-red-400 text-lg font-semibold">
+              {remainingCards}
+            </span>
+          </div>
           <div className="flex justify-center w-full mt-2 space-x-4">
             {Members.map((member) => (
               <PlayerCardComponent
@@ -218,24 +222,36 @@ const Start = () => {
             )}
           </div>
 
-          {stamp === null && (
-            <div className="border-2  border-white bg-pink-50 shadow-[0_0_0_2px_#f8edeb] p-1 m-3 ">
-              リアクションスタンプを押してね
-            </div>
+          {stamp !== null && (
+            <img
+              src={images.find((image) => image.id === stamp)?.src}
+              className="w-16 h-auto object-contain max-w-full block"
+            />
           )}
-          <div className="relative flex space-x-4 -mt-4">
-            {images.map((image) => (
-              <img
-                key={image.id}
-                src={image.src}
-                className={`w-24 h-auto cursor-pointer object-contain max-w-full ${
-                  stamp === null || stamp === image.id ? "block" : "hidden"
-                }`}
-                onClick={() => handleImageClick(image.id)}
-              />
-            ))}
-          </div>
-          <div className="absolute top-10 flex flex-row "></div>
+
+          {stampCount !== 0 && (
+            <>
+              <div className="border-2  border-white bg-pink-50 shadow-[0_0_0_2px_#f8edeb]  ">
+                {stamp ? (
+                  <>変えるときはもう一度押してね</>
+                ) : (
+                  <>リアクションスタンプを押してね</>
+                )}
+              </div>
+              <div className="relative flex space-x-4 -mt-4">
+                {images.map((image) => (
+                  <img
+                    key={image.id}
+                    src={image.src}
+                    className={`w-16 h-auto cursor-pointer object-contain max-w-full ${
+                      stamp !== image.id ? "block" : "hidden"
+                    }`}
+                    onClick={() => handleImageClick(image.id)}
+                  />
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </Layout>
     </>

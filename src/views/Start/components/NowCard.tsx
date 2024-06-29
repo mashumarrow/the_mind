@@ -7,7 +7,6 @@ type NowCardComponentProps = {
 
 export const NowCardComponent: React.FC<NowCardComponentProps> = ({
   NowCard,
-  reminingCards,
 }) => {
   return (
     <>
@@ -15,8 +14,8 @@ export const NowCardComponent: React.FC<NowCardComponentProps> = ({
         <Box
           sx={{
             position: "relative",
-            width: 110,
-            height: 146,
+            width: 50,
+            height: 76,
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
@@ -51,8 +50,8 @@ export const NowCardComponent: React.FC<NowCardComponentProps> = ({
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                width: "100%",
-                height: "100%",
+                width: "60%",
+                height: "45%",
                 padding: 2.5,
                 textAlign: "center",
               }}
@@ -67,9 +66,6 @@ export const NowCardComponent: React.FC<NowCardComponentProps> = ({
           </Card>
         </Box>
       )}
-      <p className="text-center pt-2 text-xl font-semibold text-slate-500">
-        残り{reminingCards}枚!
-      </p>
     </>
   );
 };
