@@ -44,7 +44,7 @@ const Start = () => {
   const [MyCards, setMyCards] = useState<MyCard>({ hand1: null, hand2: null }); //手札
   const [Members, setMembers] = useState<Member[]>([]); //メンバーの名前とカードの枚数
   const [remainingCards, setRemainingCards] = useState<number>(8); //チームの残りのカードの枚数
-  const [stampCount, setStampCount] = useState<number>(5); //スタンプの残り回数
+  const [stampCount, setStampCount] = useState<number>(3); //スタンプの残り回数
   const [possiblityOfSuccess, setpossiblityOfSuccess] = useState<
     boolean | null
   >(null); //成功できるかどうか
