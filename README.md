@@ -32,8 +32,9 @@ https://the-mind-game.vercel.app/
 
 ## ■使用技術
 ***
-*React
-*TailwindCSS
+
+-React
+-TailwindCSS
 *vite
 *supabase
 
