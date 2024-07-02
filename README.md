@@ -1,11 +1,14 @@
-## The Mind
+## ♠The Mind♦
 ***
 <p align="center">
 <img src="https://github.com/mashumarrow/the_mind/assets/134787738/5d5307eb-2e58-40a4-8de0-ba18c95dc4f8" width=500>
 </p>
-## サービスのURL
+
+## ■ゲームのURL
 ***
 https://the-mind-game.vercel.app/
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
