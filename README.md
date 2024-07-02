@@ -4,15 +4,13 @@
 
 ***
 <p align="center">
-  4人で協力して進める心理戦カードゲームです。
-</p>
-<p align="center">
 <img src="https://github.com/mashumarrow/the_mind/assets/134787738/5d5307eb-2e58-40a4-8de0-ba18c95dc4f8" width=850>
 </p>
 <br>
 
 ## ■ゲームのURL
 ***
+ 4人で協力して進める心理戦カードゲームです。
 https://the-mind-game.vercel.app/
 
 
