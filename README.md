@@ -12,6 +12,10 @@
 ***
  4人で協力して進める心理戦カードゲームです。<br>
 https://the-mind-game.vercel.app/
+## ■ゲームのイメージ
+***
+
+
 
 
 # React + TypeScript + Vite
