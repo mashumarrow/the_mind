@@ -46,5 +46,4 @@ figma
 
 
 
-# React + TypeScript + Vite
 
