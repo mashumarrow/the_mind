@@ -16,6 +16,12 @@ https://the-mind-game.vercel.app/
 ***
 <p align="center">
 <img src="https://github.com/mashumarrow/the_mind/assets/134787738/e528ee4c-ef5b-477a-9329-f9ff502d7a57" width=300>
+## ■遊び方
+***
+| スタート画面| wating画面|
+| --- | --- |
+| | List all new or modified files |
+| git diff | Show file differences that haven't been staged |
 
 
 
