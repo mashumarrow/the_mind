@@ -1,4 +1,4 @@
-##サービスのURL
+## サービスのURL
 ***
 https://the-mind-game.vercel.app/
 # React + TypeScript + Vite
