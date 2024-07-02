@@ -14,7 +14,8 @@
 https://the-mind-game.vercel.app/
 ## ■ゲームのイメージ
 ***
-![88ahv-240sj](https://github.com/mashumarrow/the_mind/assets/134787738/e528ee4c-ef5b-477a-9329-f9ff502d7a57)
+<p align="center">
+<img src="https://github.com/mashumarrow/the_mind/assets/134787738/e528ee4c-ef5b-477a-9329-f9ff502d7a57" width=300>
 
 
 
