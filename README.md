@@ -35,13 +35,10 @@ https://the-mind-game.vercel.app/
 ・React<br>
 ・supabase<br>
 ・TailwindCSS<br>
-・vite
+・vite<br>
 [![My Skills](https://skillicons.dev/icons?i=react,supabase,tailwindcss,vite)](https://skillicons.dev)
 
-React
-supabase
-TailwindCSS
-vite
+
 
 ## ■工夫した点
 ***
