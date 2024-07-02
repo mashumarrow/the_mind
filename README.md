@@ -1,3 +1,6 @@
+## The Mind
+![image](title_themind.png)
+
 ## サービスのURL
 ***
 https://the-mind-game.vercel.app/
