@@ -22,12 +22,16 @@ https://the-mind-game.vercel.app/
 | スタート画面| wating画面|カード配布画面|
 | --- | --- | --- |
 | <image src="https://github.com/mashumarrow/the_mind/assets/134787738/0d0f05bc-69ed-48fc-9522-002ef1f269d3" width=300>|<image src="https://github.com/mashumarrow/the_mind/assets/134787738/b3d6da02-e9b7-4a0f-81a7-1f48a0eed05a" width=300> |<image src="https://github.com/mashumarrow/the_mind/assets/134787738/b6d25f13-1332-4e55-8eb4-6b0fe72659c9" width=300>|
+| git diff |  ||
+
+| スタート画面| wating画面カード配布画面|
+| --- | --- | --- |
+| <image src="https://github.com/mashumarrow/the_mind/assets/134787738/5841c175-8cf2-4e64-a62c-c0a3e66346e8" width=300>|<image src="https://github.com/mashumarrow/the_mind/assets/134787738/e2abbcf1-7cce-4d82-8783-52507b06e43e" width=300> |<image src="https://github.com/mashumarrow/the_mind/assets/134787738/4f36c2ce-d4ba-4960-9ebb-5d5dd7b9abca" width=300>
 | git diff |  |
 
 
 
-![waiting](https://github.com/mashumarrow/the_mind/assets/134787738/b3d6da02-e9b7-4a0f-81a7-1f48a0eed05a)
-![card](https://github.com/mashumarrow/the_mind/assets/134787738/b6d25f13-1332-4e55-8eb4-6b0fe72659c9)
+
 
 
 ![fall](https://github.com/mashumarrow/the_mind/assets/134787738/4f36c2ce-d4ba-4960-9ebb-5d5dd7b9abca)
