@@ -28,7 +28,7 @@ https://the-mind-game.vercel.app/
 | プレイ画面| クリア画面|失敗 画面|
 | --- | --- |  --- |
 | <image src="https://github.com/mashumarrow/the_mind/assets/134787738/5841c175-8cf2-4e64-a62c-c0a3e66346e8" width=300>|<image src="https://github.com/mashumarrow/the_mind/assets/134787738/e2abbcf1-7cce-4d82-8783-52507b06e43e" width=300>| <image src="https://github.com/mashumarrow/the_mind/assets/134787738/4f36c2ce-d4ba-4960-9ebb-5d5dd7b9abca" width=300>|
-|スタンプの相手のリアクションで<br>予想しながら数の小さい順にカードを<br>タップします。ただしスタンプを<br>押せるのはチームで３回<br>まで。|正しく数の小さい順に出せればクリア|正しく数の小さい順に出せなければ失敗  |
+|スタンプの相手のリアクションで<br>予想しながら数の小さい順にカードを<br>タップします。ただしスタンプを押せるのは<br>チームで３回まで。|正しく数の小さい順に出せればクリア|正しく数の小さい順に出せなければ失敗  |
 
 
 
