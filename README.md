@@ -1,9 +1,9 @@
 <h1 align="center"> 
-  ## ♠The Mind🃏
+  ## 🃏The Mind🃏
 </h1>
 ***
 <p align="center">
-<img src="https://github.com/mashumarrow/the_mind/assets/134787738/5d5307eb-2e58-40a4-8de0-ba18c95dc4f8" width=500>
+<img src="https://github.com/mashumarrow/the_mind/assets/134787738/5d5307eb-2e58-40a4-8de0-ba18c95dc4f8" width=750>
 </p>
 
 ## ■ゲームのURL
