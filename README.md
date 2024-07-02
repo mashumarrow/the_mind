@@ -32,7 +32,7 @@ https://the-mind-game.vercel.app/
 
 ## ■使用技術
 ***
-[![My Skills](https://skillicons.dev/icons?i=react,supabase,tailwindcss,vite,figma&theme=light)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=react,supabase,tailwindcss,vite,figma)](https://skillicons.dev)
 
 React
 supabase
