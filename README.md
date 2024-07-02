@@ -25,10 +25,10 @@ https://the-mind-game.vercel.app/
 | ルールを確認したら<br>名前を入力しボタンをタップ |４人部屋に入るまで待っています。<br>あと何人はいればスタートするか<br>表示しています。  |1～100までのカードを１人２枚<br>ランダムで配布しています。|
 <br>
 
-| プレイ画面| クリアor失敗 画面|
+| プレイ画面| クリア画面|失敗 画面|
 | --- | --- | 
-| <image src="https://github.com/mashumarrow/the_mind/assets/134787738/5841c175-8cf2-4e64-a62c-c0a3e66346e8" width=300>|<image src="https://github.com/mashumarrow/the_mind/assets/134787738/e2abbcf1-7cce-4d82-8783-52507b06e43e" width=300> <image src="https://github.com/mashumarrow/the_mind/assets/134787738/4f36c2ce-d4ba-4960-9ebb-5d5dd7b9abca" width=300>|
-|スタンプの相手のリアクションで<br>予想しながら数の小さい順にカードをタップします。<br>ただしスタンプを押せるのはチームで３回<br>まで。|正しく数の小さい順に出せればクリア，間違えれば失敗  |
+| <image src="https://github.com/mashumarrow/the_mind/assets/134787738/5841c175-8cf2-4e64-a62c-c0a3e66346e8" width=300>|<image src="https://github.com/mashumarrow/the_mind/assets/134787738/e2abbcf1-7cce-4d82-8783-52507b06e43e" width=300>| <image src="https://github.com/mashumarrow/the_mind/assets/134787738/4f36c2ce-d4ba-4960-9ebb-5d5dd7b9abca" width=300>|
+|スタンプの相手のリアクションで<br>予想しながら数の小さい順にカードをタップします。<br>ただしスタンプを押せるのはチームで３回<br>まで。|正しく数の小さい順に出せればクリア|正しく数の小さい順に出せなければ失敗  |
 
 
 
