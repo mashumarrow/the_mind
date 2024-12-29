@@ -16,6 +16,13 @@ https://the-mind-game.vercel.app/
 ***
 <p align="center">
 <img src="https://github.com/mashumarrow/the_mind/assets/134787738/e528ee4c-ef5b-477a-9329-f9ff502d7a57" width=300>
+
+## ■ルール説明動画
+***
+
+https://github.com/user-attachments/assets/65b6b08b-f5d4-45f0-8cff-ad266a7b1457
+
+
    
 ## ■遊び方
 ***
