@@ -19,7 +19,7 @@ https://the-mind-game.vercel.app/
 
 ## ■ルール説明動画
 ***
-
+<p align="center">
 https://github.com/user-attachments/assets/65b6b08b-f5d4-45f0-8cff-ad266a7b1457
 
 
